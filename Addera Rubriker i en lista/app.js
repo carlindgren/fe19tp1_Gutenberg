@@ -9,7 +9,7 @@ addForm.addEventListener('submit', (e) => {
 
     const note = {
         text: header,
-        id: Date.now() // bra med tanke på att vi ska visa när dokumenten skapades.
+        tid: Date.now() // bra med tanke på att vi ska visa när dokumenten skapades.
     }
 
     if(header) { //om input inte är tom kör if-satsen
@@ -23,6 +23,24 @@ addForm.reset()
 //spara i locale storage
 const saveNotes = () => {
         localStorage.setItem("notes", JSON.stringify(notes));
-    
 }  
-console.log(localStorage)
+
+const loadNotes = () => {
+//om null, ger oss tom array. inget att ladda.
+notes = localStorage.getItem('notes') ? JSON.parse(localStorage.getItem("notes")) : [];
+console.log(notes.length) // kollar hur många notes som finns.
+return notes //returnerar notes för att passera in i renderNotes();
+}
+// loadNotes()
+
+const renderNotes = (notes) => {
+    for (let i = 0; i < notes.length; i++) {
+    list.innerHTML += `<li> ${notes[i].text}</li>` //tar alla notes och renderar på skärmen
+    }
+} 
+// renderNotes(notes)
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    loadNotes();
+    renderNotes(notes);
+});
