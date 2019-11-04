@@ -1,11 +1,24 @@
+const info = document.querySelector('.information')
 const addForm = document.querySelector('.addForm')
 const list = document.querySelector('.list')
 let notes = [];
-addForm.addEventListener('submit', (e) => {
 
+// tar bort infotexten när localstorage.length blir 1.
+let empty = () => {};
+let displayInfo = () => {
+    if(localStorage.length === 1){   
+    info.outerHTML = '';
+    displayInfo = empty
+    }
+}
+
+
+addForm.addEventListener('submit', (e) => {
+    
     let input = addForm.add.value.trim(); //tar bort mellanrum
     let header = input.charAt(0).toUpperCase() + input.substring(1) //ändrar så att första bokstaven är stor bokstav 
     e.preventDefault();
+    
 
     const note = {
         text: header,
@@ -13,16 +26,18 @@ addForm.addEventListener('submit', (e) => {
     }
 
     if(header) { //om input inte är tom kör if-satsen
+    
     list.innerHTML += `<li> ${header}</li>` //Här ska vi addera rubriken
     notes.push(note)
 }
 saveNotes()
+displayInfo()
 addForm.reset()
 });
 
 //spara i locale storage
 const saveNotes = () => {
-        localStorage.setItem("notes", JSON.stringify(notes));
+        localStorage.setItem('notes', JSON.stringify(notes));
 }  
 
 const loadNotes = () => {
@@ -43,4 +58,5 @@ const renderNotes = (notes) => {
 window.addEventListener('DOMContentLoaded', (event) => {
     loadNotes();
     renderNotes(notes);
+    displayInfo()
 });
