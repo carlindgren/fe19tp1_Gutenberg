@@ -1,6 +1,7 @@
 const info = document.querySelector('.information')
 const addForm = document.querySelector('.addForm')
 const list = document.querySelector('.list')
+const doc = document.querySelector('.document')
 let notes = [];
 
 // tar bort infotexten när localstorage.length blir 1.
@@ -10,6 +11,14 @@ let displayInfo = () => {
     info.outerHTML = '';
     displayInfo = empty
     }
+}
+
+//funktion för att rendera editorn vid submit.
+const renderEditor = () => {
+    doc.firstElementChild.innerHTML = `
+    <textarea id="mytextarea" name="mytextarea">Skriv något</textarea>
+    `
+    document.localation.reload();
 }
 
 
@@ -30,6 +39,7 @@ addForm.addEventListener('submit', (e) => {
     list.innerHTML += `<li> ${header}</li>` //Här ska vi addera rubriken
     notes.push(note)
 }
+renderEditor()
 saveNotes()
 displayInfo()
 addForm.reset()
