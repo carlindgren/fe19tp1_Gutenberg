@@ -2,12 +2,13 @@ const info = document.querySelector('.information')
 const addForm = document.querySelector('.addForm')
 const list = document.querySelector('.list')
 const doc = document.querySelector('.document')
-const editor = document.querySelector('#editor')
+const editorContent = document.querySelector('#editor')
+
 let notes = [];
 
 // tar bort infotexten när localstorage.length blir 1.
 //let empty = () => { };
-let undisplayInfo = () => {
+let hideInfo = () => {
     if (localStorage.length > 0) {
         info.remove();
        // displayInfo = empty
@@ -24,7 +25,8 @@ const renderEditor = () => {
 
 
 addForm.addEventListener('submit', (e) => {
-    undisplayInfo()
+    hideInfo()
+    let content = editorContent.firstChild.innerHTML
     let input = addForm.add.value.trim(); //tar bort mellanrum
     let header = input.charAt(0).toUpperCase() + input.substring(1) //ändrar så att första bokstaven är stor bokstav 
     e.preventDefault();
@@ -32,12 +34,12 @@ addForm.addEventListener('submit', (e) => {
 
     const note = {
         text: header,
-        id: Date.now() // bra med tanke på att vi ska visa när dokumenten skapades.
-        // lägga till ett nytt objekt för att spara documentet och kunna rendera.
+        id: Date.now(), // bra med tanke på att vi ska visa när dokumenten skapades.
+        editorContent: content // lägga till ett nytt objekt för att spara documentet och kunna rendera.
     }
 
     if (header) { //om input inte är tom kör if-satsen
-        list.innerHTML += `<li> ${header}</li>` //Här ska vi addera rubriken
+        list.innerHTML += `<li id="${note.id}"> ${header}</li>` //Här ska vi addera rubriken
         notes.push(note)
         renderEditor()
         
@@ -73,5 +75,5 @@ window.addEventListener('DOMContentLoaded', (event) => {
     console.log("ran")
     loadNotes();
     renderNotes(notes);
-    undisplayInfo()
+    hideInfo()
 });

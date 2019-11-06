@@ -7,14 +7,12 @@
     background: lightblue;
 }
 
-ul {
+.list {
     padding: 0;
     list-style-type: none;
-
 }
-li {
+.list li {
     margin-top: 10px;
-
     padding: 10px;
     background: lightblue;
 }
@@ -24,6 +22,12 @@ li {
     flex-direction: column;
 }
 .document {
+    margin-left: 10px;
+    border: 1px solid black;
+    width:100%;
+    height: 900px;
+}
+.information {
     margin-left: 10px;
     border: 1px solid black;
     width:100%;
