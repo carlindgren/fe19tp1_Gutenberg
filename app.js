@@ -2,22 +2,24 @@ const info = document.querySelector('.information')
 const addForm = document.querySelector('.addForm')
 const list = document.querySelector('.list')
 const doc = document.querySelector('.document')
+const editor = document.querySelector('#editor')
 let notes = [];
 
 // tar bort infotexten när localstorage.length blir 1.
 //let empty = () => { };
 let undisplayInfo = () => {
-    if (localStorage.length) {
+    if (localStorage.length > 0) {
         info.remove();
        // displayInfo = empty
+       renderEditor();
     }
+    
 }
 
 //funktion för att rendera editorn vid submit.
 const renderEditor = () => {
-    doc.firstElementChild.innerHTML = `
-    <textarea id="mytextarea" name="mytextarea">Skriv något</textarea>
-    `
+    doc.classList.remove("hidden")
+    info.remove();
 }
 
 
@@ -30,7 +32,8 @@ addForm.addEventListener('submit', (e) => {
 
     const note = {
         text: header,
-        tid: Date.now() // bra med tanke på att vi ska visa när dokumenten skapades.
+        id: Date.now() // bra med tanke på att vi ska visa när dokumenten skapades.
+        // lägga till ett nytt objekt för att spara documentet och kunna rendera.
     }
 
     if (header) { //om input inte är tom kör if-satsen
@@ -67,6 +70,7 @@ const renderNotes = (notes) => {
 // renderNotes(notes)
 
 window.addEventListener('DOMContentLoaded', (event) => {
+    console.log("ran")
     loadNotes();
     renderNotes(notes);
     undisplayInfo()
