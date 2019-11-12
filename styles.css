@@ -16,7 +16,12 @@
     padding: 10px;
     background: lightblue;
 }
-
+.list *:hover{
+    cursor: pointer;
+}
+.clicked{
+    background-color: blue;
+}
 .sidebar-container {
     display: flex;
     flex-direction: column;
