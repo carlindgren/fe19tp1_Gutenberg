@@ -4,6 +4,7 @@ const list = document.querySelector('.list');
 const doc = document.querySelector('.document');
 const editorContent = document.querySelector('#editor');
 const saveBtn = document.querySelector('.save')
+let fav = document.querySelector('.favourite')
 let notes = [];
 let content;
 let currentId; // bör innehålla ID:t på "aktiv" note
@@ -32,7 +33,9 @@ addForm.addEventListener('submit', (e) => {
     const note = {
         text,
         id: Date.now(), // bra med tanke på att vi ska visa när dokumenten skapades.
-        content // lägga till ett nytt objekt för att spara documentet och kunna rendera.
+        content, // lägga till ett nytt objekt för att spara documentet och kunna rendera.
+        favourite: false, //detta är kvar att göra
+        deleted: false //kvar att göra
     }
 
 
@@ -67,12 +70,14 @@ const loadNotes = () => {
 
 const renderNotes = notes => {
     notes.forEach(note => {
+        if(note.deleted === false){
         //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
         list.innerHTML += renderNote(note);
-    })
+      }
+   })
 }
 //skapar en note, renderar vid onload och submit.
-const renderNote = note => `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
+const renderNote = note => `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text} <span class="delete">x</span><span class="favourite"><3</span></li>`
 
 // renderNotes(notes)
 
@@ -94,14 +99,26 @@ quill.on('text-change', () => {
 });
 
 list.addEventListener('click', (e) => {
+//när vi tycker på knappen ska vi leta efter e.target.class = 'delete'
+//om klassen finns ta bort från listan.
+// klickade vi på krysset?
+// annars:
+    let selectedNote = notes.find(note => note.id == e.target.id || note.id == e.target.parentElement.id);
+    if (e.target.className === 'delete'){
+        e.target.parentElement.remove();
+        selectedNote.deleted = true
+    
+    }else if (e.target.className === 'favourite'){
+        selectedNote.favourite = true  
+        e.target.parentElement.
+        console.log(fav.innerHTML);
 
-    // klickade vi på krysset?
-    console.log(e.target)
-    // annars:
-    let selectedNote = notes.find(note => note.id == e.target.id);
+    }else
+
     currentId = selectedNote.id // sätter current id när man klickar på noten
-    console.log(currentContent)
     currentContent = selectedNote.content; 
+    console.log(selectedNote)
     quill.setContents(selectedNote.content)
+    saveNotes()
     console.log('current id ' + currentId)
 })
