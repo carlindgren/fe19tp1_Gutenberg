@@ -4,11 +4,183 @@ const list = document.querySelector('.list');
 const doc = document.querySelector('.document');
 const editorContent = document.querySelector('#editor');
 const saveBtn = document.querySelector('.save')
+const themeBtn = document.querySelector('.theme')
 let fav = document.querySelector('.favourite')
 let notes = [];
 let content;
 let currentId; // bör innehålla ID:t på "aktiv" note
 let currentContent;
+var element = document.getElementsByClassName("ql-editor");
+
+let activeNote =  {active: Object}
+
+
+const template1 = {
+  "ops": [
+    {
+      "attributes": {
+        "color": "#48b141",
+        "bold": true
+      },
+      "insert": "Om den här mallen:"
+    },
+    {
+      "insert": "\n"
+    },
+    {
+      "attributes": {
+        "bold": true
+      },
+      "insert": "Den här mallen är utformad för att hjälpa dig att fånga idéer och inspiration när du börjar planera ett evenemang. Vi har lagt till några exempel för att du ska komma igång, men du kan ersätta dem med dina egna idéer."
+    },
+    {
+      "insert": "\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#48b141"
+      },
+      "insert": "Evenemangsinfo"
+    },
+    {
+      "insert": "\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#ffffff",
+        "bold": true
+      },
+      "insert": "Evenemangets namn:"
+    },
+    {
+      "insert": "\nSemesterfest\n"
+    },
+    {
+      "attributes": {
+        "color": "#ffffff",
+        "bold": true
+      },
+      "insert": "Datum:"
+    },
+    {
+      "insert": "\nDen sista fredagen som är arbetsdag i december\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#48b141"
+      },
+      "insert": "Teman"
+    },
+    {
+      "insert": "\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#ffffff",
+        "bold": true
+      },
+      "insert": "Idéer"
+    },
+    {
+      "insert": "\nVinterparadis"
+    },
+    {
+      "attributes": {
+        "list": "bullet"
+      },
+      "insert": "\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#ffffff",
+        "bold": true
+      },
+      "insert": "Inspiration"
+    },
+    {
+      "insert": "\nKlistra in länkar från Pinterest och andra webbplatser eller använd anteckningslänkar för att länka till innehåll du har sparat med Web Clipper.\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#48b141"
+      },
+      "insert": "Mat/Dryck"
+    },
+    {
+      "insert": "\n"
+    },
+    {
+      "attributes": {
+        "color": "#ffffff",
+        "bold": true
+      },
+      "insert": "Idéer"
+    },
+    {
+      "insert": "\nVarm choklad"
+    },
+    {
+      "attributes": {
+        "list": "bullet"
+      },
+      "insert": "\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#ffffff",
+        "bold": true
+      },
+      "insert": "Inspiration"
+    },
+    {
+      "insert": "\nKlistra in länkar från Pinterest och andra webbplatser eller använd anteckningslänkar för att länka till innehåll du har sparat med Web Clipper.\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#48b141"
+      },
+      "insert": "Aktiviteter/underhållning"
+    },
+    {
+      "insert": "\n"
+    },
+    {
+      "attributes": {
+        "color": "#ffffff",
+        "bold": true
+      },
+      "insert": "Idéer"
+    },
+    {
+      "insert": "\nFotobås"
+    },
+    {
+      "attributes": {
+        "list": "bullet"
+      },
+      "insert": "\n"
+    },
+    {
+      "insert": "Pepparkakshus"
+    },
+    {
+      "attributes": {
+        "list": "bullet"
+      },
+      "insert": "\n\n"
+    },
+    {
+      "attributes": {
+        "color": "#ffffff",
+        "bold": true
+      },
+      "insert": "Inspiration"
+    },
+    {
+      "insert": "\nKlistra in länkar från Pinterest och andra webbplatser eller använd anteckningslänkar för att länka till innehåll du har sparat med Web Clipper.\n"
+    }
+  ]
+}   
 
 // tar bort infotexten när localstorage.length blir 1.
 let hideInfo = () => {
@@ -51,6 +223,7 @@ addForm.addEventListener('submit', (e) => {
     console.log('currentid ' + currentId)
     console.log('current content ' + currentContent)
     saveNotes();
+    element[0].innerHTML = "";
     addForm.reset()
 });
 
@@ -58,8 +231,13 @@ addForm.addEventListener('submit', (e) => {
 const saveNotes = () => {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
+const saveActiveNote = () => {
+    localStorage.setItem('activeNote', JSON.stringify(activeNote.id))//activeNote    
+}
+const loadActiveNote = () => {
+    return localStorage.getItem('activeNote') ? JSON.parse(localStorage.getItem('activeNote')) : 0;
 
-
+}   
 const loadNotes = () => {
     //om null, ger oss tom array. inget att ladda.
 
@@ -85,6 +263,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     console.log('ran')
     notes = loadNotes()
     renderNotes(notes);
+    let activeNoteID = loadActiveNote();
+    if (activeNoteID > 0) {
+    let selectedNote = notes.find(note => note.id == activeNoteID)
+    currentId = activeNoteID;
+    quill.setContents(selectedNote.content)
+    }
     hideInfo()
 });
 
@@ -93,7 +277,8 @@ quill.on('text-change', () => {
     console.log(currentContent)
     if (currentId) { //om vi har ett currentID, leta rätt på nuvarande note.
         let selectedNote = notes.find(note => note.id == currentId);
-        selectedNote.content = currentContent
+        selectedNote.content = quill.getContents();
+        activeNote = selectedNote // lägger in innehållet i active note i vårt nya objekt.
     }
     saveNotes()
 });
@@ -120,5 +305,6 @@ list.addEventListener('click', (e) => {
     console.log(selectedNote)
     quill.setContents(selectedNote.content)
     saveNotes()
+    saveActiveNote();
     console.log('current id ' + currentId)
 })
