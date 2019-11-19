@@ -13,11 +13,16 @@
 <body>
     <div class="container">
         <div class="sidebar-container">
-            <form class="addForm">
-                <input class="text-input" name="add" type="text" placeholder="Rubrik...">
+            <form class="searchForm">
+                <input class="search-input" name="search" type="search" placeholder="Sök..">
             </form>
+            <form class="addForm">
+                <input class="text-input" name="add" type="text" placeholder="Ny anteckning...">
+            </form>
+
             <ul class="list">
             </ul>
+            <button class="theme">TEMA</button>
 
         </div>
         <p class="information">För att skapa ett nytt dokument, skriv in Rubriken i fältet till vänster.</p>
@@ -28,6 +33,7 @@
         </div>
 
     </div>
+    <script src="https://kit.fontawesome.com/b62150c838.js" crossorigin="anonymous"></script>
     <script src="http://cdn.date-fns.org/v1.9.0/date_fns.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="quillinit.js"></script>

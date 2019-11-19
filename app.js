@@ -7,180 +7,13 @@ const saveBtn = document.querySelector('.save')
 const themeBtn = document.querySelector('.theme')
 let fav = document.querySelector('.favourite')
 let notes = [];
+var element = document.getElementsByClassName("ql-editor");
 let content;
 let currentId; // bör innehålla ID:t på "aktiv" note
 let currentContent;
-var element = document.getElementsByClassName("ql-editor");
+  //tömmer editor.
 
 let activeNote =  {active: Object}
-
-
-const template1 = {
-  "ops": [
-    {
-      "attributes": {
-        "color": "#48b141",
-        "bold": true
-      },
-      "insert": "Om den här mallen:"
-    },
-    {
-      "insert": "\n"
-    },
-    {
-      "attributes": {
-        "bold": true
-      },
-      "insert": "Den här mallen är utformad för att hjälpa dig att fånga idéer och inspiration när du börjar planera ett evenemang. Vi har lagt till några exempel för att du ska komma igång, men du kan ersätta dem med dina egna idéer."
-    },
-    {
-      "insert": "\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#48b141"
-      },
-      "insert": "Evenemangsinfo"
-    },
-    {
-      "insert": "\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#ffffff",
-        "bold": true
-      },
-      "insert": "Evenemangets namn:"
-    },
-    {
-      "insert": "\nSemesterfest\n"
-    },
-    {
-      "attributes": {
-        "color": "#ffffff",
-        "bold": true
-      },
-      "insert": "Datum:"
-    },
-    {
-      "insert": "\nDen sista fredagen som är arbetsdag i december\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#48b141"
-      },
-      "insert": "Teman"
-    },
-    {
-      "insert": "\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#ffffff",
-        "bold": true
-      },
-      "insert": "Idéer"
-    },
-    {
-      "insert": "\nVinterparadis"
-    },
-    {
-      "attributes": {
-        "list": "bullet"
-      },
-      "insert": "\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#ffffff",
-        "bold": true
-      },
-      "insert": "Inspiration"
-    },
-    {
-      "insert": "\nKlistra in länkar från Pinterest och andra webbplatser eller använd anteckningslänkar för att länka till innehåll du har sparat med Web Clipper.\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#48b141"
-      },
-      "insert": "Mat/Dryck"
-    },
-    {
-      "insert": "\n"
-    },
-    {
-      "attributes": {
-        "color": "#ffffff",
-        "bold": true
-      },
-      "insert": "Idéer"
-    },
-    {
-      "insert": "\nVarm choklad"
-    },
-    {
-      "attributes": {
-        "list": "bullet"
-      },
-      "insert": "\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#ffffff",
-        "bold": true
-      },
-      "insert": "Inspiration"
-    },
-    {
-      "insert": "\nKlistra in länkar från Pinterest och andra webbplatser eller använd anteckningslänkar för att länka till innehåll du har sparat med Web Clipper.\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#48b141"
-      },
-      "insert": "Aktiviteter/underhållning"
-    },
-    {
-      "insert": "\n"
-    },
-    {
-      "attributes": {
-        "color": "#ffffff",
-        "bold": true
-      },
-      "insert": "Idéer"
-    },
-    {
-      "insert": "\nFotobås"
-    },
-    {
-      "attributes": {
-        "list": "bullet"
-      },
-      "insert": "\n"
-    },
-    {
-      "insert": "Pepparkakshus"
-    },
-    {
-      "attributes": {
-        "list": "bullet"
-      },
-      "insert": "\n\n"
-    },
-    {
-      "attributes": {
-        "color": "#ffffff",
-        "bold": true
-      },
-      "insert": "Inspiration"
-    },
-    {
-      "insert": "\nKlistra in länkar från Pinterest och andra webbplatser eller använd anteckningslänkar för att länka till innehåll du har sparat med Web Clipper.\n"
-    }
-  ]
-}   
 
 // tar bort infotexten när localstorage.length blir 1.
 let hideInfo = () => {
@@ -217,13 +50,13 @@ addForm.addEventListener('submit', (e) => {
         notes.push(note) 
         renderEditor()
     }
+
     currentId = notes[notes.length - 1].id; //sätter nuvarande id vid submit.
     console.log(note.length)
     currentContent = notes[notes.length - 1].content //sätter nuvarande content vid submit.
-    console.log('currentid ' + currentId)
-    console.log('current content ' + currentContent)
+    //saveActiveNote();
     saveNotes();
-    element[0].innerHTML = "";
+    element[0].innerHTML = ""; 
     addForm.reset()
 });
 
@@ -248,18 +81,18 @@ const loadNotes = () => {
 
 const renderNotes = notes => {
     notes.forEach(note => {
-        if(note.deleted === false){
+        if(note.deleted === false){     
         //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
         list.innerHTML += renderNote(note);
       }
    })
 }
 //skapar en note, renderar vid onload och submit.
-const renderNote = note => `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text} <span class="delete">x</span><span class="favourite"><3</span></li>`
+const renderNote = note => `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text} <span class="delete">X</span><span><i class="favourite far fa-star"></i></span></li>`
 
 // renderNotes(notes)
 
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', (e) => {
     console.log('ran')
     notes = loadNotes()
     renderNotes(notes);
@@ -277,6 +110,7 @@ quill.on('text-change', () => {
     console.log(currentContent)
     if (currentId) { //om vi har ett currentID, leta rätt på nuvarande note.
         let selectedNote = notes.find(note => note.id == currentId);
+        //selectedNote.content = currentContent
         selectedNote.content = quill.getContents();
         activeNote = selectedNote // lägger in innehållet i active note i vårt nya objekt.
     }
@@ -284,27 +118,33 @@ quill.on('text-change', () => {
 });
 
 list.addEventListener('click', (e) => {
-//när vi tycker på knappen ska vi leta efter e.target.class = 'delete'
-//om klassen finns ta bort från listan.
-// klickade vi på krysset?
-// annars:
-    let selectedNote = notes.find(note => note.id == e.target.id || note.id == e.target.parentElement.id);
+
+    let selectedNote = notes.find(note => note.id == e.target.id || note.id == e.target.parentElement.id || note.id == e.target.parentElement.parentElement.id);
     if (e.target.className === 'delete'){
         e.target.parentElement.remove();
         selectedNote.deleted = true
-    
-    }else if (e.target.className === 'favourite'){
-        selectedNote.favourite = true  
-        e.target.parentElement.
-        console.log(fav.innerHTML);
-
-    }else
-
-    currentId = selectedNote.id // sätter current id när man klickar på noten
+        console.log(e)
+    } 
+    if (selectedNote.favourite === false && e.target.classList[0] === 'favourite'){
+        selectedNote.favourite = true 
+        e.target.classList.add('fas')
+    } else if (selectedNote.favourite === true && e.target.classList[0] === 'favourite') {
+        selectedNote.favourite = false;
+        e.target.classList.remove('fas')
+    }
+    //selectedNote.favourite = true när man klickar på stjärnan
+    //om selectedNote.favourite === true, rendera ifylld stjärna
+    //annas rendera tom stjärna
+    //vid onload måste stjärnan vara ifylld om den en gång blivit det.
+    currentId = selectedNote.id // sätter current id när man klickar på noten 
     currentContent = selectedNote.content; 
-    console.log(selectedNote)
     quill.setContents(selectedNote.content)
-    saveNotes()
-    saveActiveNote();
     console.log('current id ' + currentId)
+ 
+    activeNote = selectedNote
+    saveActiveNote()
+    console.log('current id ' + currentId)
+})
+themeBtn.addEventListener('click', (e) => {
+  quill.setContents(template1);
 })
