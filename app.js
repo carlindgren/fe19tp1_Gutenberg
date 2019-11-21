@@ -7,13 +7,12 @@ const saveBtn = document.querySelector('.save')
 const themeBtn = document.querySelector('.theme')
 let fav = document.querySelector('.favourite')
 let notes = [];
-var element = document.getElementsByClassName("ql-editor");
+var qlEditor = document.getElementsByClassName("ql-editor");
 let content;
 let currentId; // bör innehålla ID:t på "aktiv" note
 let currentContent;
-  //tömmer editor.
 
-let activeNote =  {active: Object}
+let activeNote = { active: Object }
 
 // tar bort infotexten när localstorage.length blir 1.
 let hideInfo = () => {
@@ -47,16 +46,15 @@ addForm.addEventListener('submit', (e) => {
     if (text) { //om input inte är tom kör if-satsen
         //list.innerHTML += `<li id="${note.id}">${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${text}</li>` 
         list.innerHTML += renderNote(note);
-        notes.push(note) 
+        notes.push(note)
         renderEditor()
     }
 
     currentId = notes[notes.length - 1].id; //sätter nuvarande id vid submit.
-    console.log(note.length)
     currentContent = notes[notes.length - 1].content //sätter nuvarande content vid submit.
     //saveActiveNote();
     saveNotes();
-    element[0].innerHTML = ""; 
+    qlEditor[0].innerHTML = "";
     addForm.reset()
 });
 
@@ -70,7 +68,7 @@ const saveActiveNote = () => {
 const loadActiveNote = () => {
     return localStorage.getItem('activeNote') ? JSON.parse(localStorage.getItem('activeNote')) : 0;
 
-}   
+}
 const loadNotes = () => {
     //om null, ger oss tom array. inget att ladda.
 
@@ -81,14 +79,14 @@ const loadNotes = () => {
 
 const renderNotes = notes => {
     notes.forEach(note => {
-        if(note.deleted === false){     
-        //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
-        list.innerHTML += renderNote(note);
-      }
-   })
+        if (note.deleted === false) {
+            //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
+            list.innerHTML += renderNote(note);
+        }
+    })
 }
 //skapar en note, renderar vid onload och submit.
-const renderNote = note => `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text} <span class="delete">X</span><span><i class="favourite far fa-star"></i></span></li>`
+const renderNote = note => `<li id="${note.id}"> ${dateFns.format(note.id, `D MMMM YYYY HH${':'}mm`)} <br> ${note.text} <span class="delete">X</span><span><i class="favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i></span></li>`
 
 // renderNotes(notes)
 
@@ -98,16 +96,16 @@ window.addEventListener('DOMContentLoaded', (e) => {
     renderNotes(notes);
     let activeNoteID = loadActiveNote();
     if (activeNoteID > 0) {
-    let selectedNote = notes.find(note => note.id == activeNoteID)
-    currentId = activeNoteID;
-    quill.setContents(selectedNote.content)
+        let selectedNote = notes.find(note => note.id == activeNoteID)
+        currentId = activeNoteID;
+        quill.setContents(selectedNote.content)
     }
     hideInfo()
 });
 
 quill.on('text-change', () => {
     currentContent = quill.getContents()
-    console.log(currentContent)
+    console.log(currentId)
     if (currentId) { //om vi har ett currentID, leta rätt på nuvarande note.
         let selectedNote = notes.find(note => note.id == currentId);
         //selectedNote.content = currentContent
@@ -120,31 +118,66 @@ quill.on('text-change', () => {
 list.addEventListener('click', (e) => {
 
     let selectedNote = notes.find(note => note.id == e.target.id || note.id == e.target.parentElement.id || note.id == e.target.parentElement.parentElement.id);
-    if (e.target.className === 'delete'){
+    //
+    if (e.target.className === 'delete') {
         e.target.parentElement.remove();
         selectedNote.deleted = true
-        console.log(e)
-    } 
-    if (selectedNote.favourite === false && e.target.classList[0] === 'favourite'){
-        selectedNote.favourite = true 
+        qlEditor[0].innerHTML = ""; //varför fungerar inte koden
+    }
+    //stjärnmarkerar
+    if (selectedNote.favourite === false && e.target.classList[0] === 'favourite') {
+        selectedNote.favourite = true  
+        list.innerHTML = '';
         e.target.classList.add('fas')
+        e.target.classList.remove('far')
+        renderNotes(sortFavouriteTrue(notes, selectedNote.id))
+        saveNotes()
+        // document.getElementById(currentId).childNodes[2].lastChild.classList.add('fas')//.lastChild.classList.add('fas')
+        //currentId stämmer med idt på listan??
+        
+
     } else if (selectedNote.favourite === true && e.target.classList[0] === 'favourite') {
         selectedNote.favourite = false;
+       // list.innerHTML = '';
+       //  renderNotes(sortFavouriteFalse(notes))
+        saveNotes()
+        e.target.classList.add('far')
         e.target.classList.remove('fas')
     }
-    //selectedNote.favourite = true när man klickar på stjärnan
-    //om selectedNote.favourite === true, rendera ifylld stjärna
-    //annas rendera tom stjärna
-    //vid onload måste stjärnan vara ifylld om den en gång blivit det.
-    currentId = selectedNote.id // sätter current id när man klickar på noten 
-    currentContent = selectedNote.content; 
-    quill.setContents(selectedNote.content)
-    console.log('current id ' + currentId)
- 
+
+     currentId = selectedNote.id // sätter current id när man klickar på noten 
+    //let {content, id: currentId} = selectedNote
+     currentContent = selectedNote.content;
+    quill.setContents(currentContent)
+
     activeNote = selectedNote
     saveActiveNote()
     console.log('current id ' + currentId)
 })
-themeBtn.addEventListener('click', (e) => {
-  quill.setContents(template1);
-})
+
+//flyttar upp noten om vi favoritmarkerar.
+const sortFavouriteTrue = (notes, noteID) => {
+    notes.forEach((note, index) => {
+        if (note.favourite && noteID == note.id) {
+            notes.unshift(note)
+            notes.splice(index + 1, 1)
+            console.log(notes)
+        }
+    })
+    return notes
+}
+//flytta ned favoritmarkerade notes i listan.
+/* const sortFavouriteFalse = (notes, noteID) => {
+    notes.forEach((note, index) => {
+        if (note.favourite && noteID == note.id) {
+            notes.push(note)
+            notes.splice(index, 1)
+            console.log(notes)
+        }
+    })
+    return notes
+} */
+
+/* themeBtn.addEventListener('click', (e) => {
+    quill.setContents(template1);
+}) */

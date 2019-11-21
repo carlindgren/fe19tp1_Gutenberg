@@ -1,8 +1,14 @@
 .container {
     display: flex;
 }
-.sta {
-    color: yellow;
+
+input[type=text] {
+border: none;
+width:230px;
+}
+
+input:focus {
+    outline: none;
 }
 
 .search-input {
@@ -35,21 +41,31 @@
     display: flex;
     flex-direction: column;
 }
+
 .document {
     margin-left: 10px;
-    border: 1px solid black;
-    width:100%;
+    width:50%;
     height: 900px;
 }
 .information {
     margin-left: 10px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width:100%;
     height: 900px;
 }
 
 .hidden {
     display: none;
+}
+
+@media print {
+.sidebar-container,.list,input,.ql-toolbar {
+    display: none;
+}
+.document{
+    width:100%;
+    height:900px;
+}
 }
 
 
