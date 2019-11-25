@@ -1,20 +1,33 @@
+*,*::before,*::after{
+    transition: all .3s ease;
+}
 .container {
     display: flex;
 }
- hr{    
-    border: 0;
-    height: 1px;
-    background: #333;
+.fa-trash-alt, .fa-star {
+    color: #999;
 }
+#editor {
+    border: none;
+    height: 818px;
+    /* border-left: 1px solid black; */
+}
+.ql-toolbar.ql-snow {
+    border: none;
+  /*   border-left: 1px solid black; */
+}
+
 .fas {
-    color: yellow;
+    color: #ffc53d;
 }
 .far, .fas {
     float: right;
     margin-left: 5px;
 }
 input[type=text] {
+font-size: 20px;
 border: none;
+
 width:230px;
 }
 
@@ -27,9 +40,12 @@ input:focus {
 } */
 .text-input {
     padding: 10px;
-    background: lightblue;
+    background: #f8f6f6;
 }
-
+.title-input{
+    margin-left:10px;
+    padding: 10px;
+}
 .list {
     font-family: sans-serif; 
     color: rgb(40, 40, 40);
@@ -37,26 +53,33 @@ input:focus {
     list-style-type: none;
 }
 .list li {
-    margin-top: 4px;
     padding: 10px;
-    background: lightblue;
+    background: whitesmoke;
+    border-bottom: 0.5px solid #999;
 }
 .list li:hover{
+    border-right: none;
     cursor: pointer;
-    background: #c8dfe7;
+    background: white;
 } 
 
 .clicked{ 
     background-color: blue;
 }
 .sidebar-container {
+    box-shadow: 3px 0 5px -2px #888;
+    background-color: whitesmoke;
     display: flex;
     flex-direction: column;
+    height: 810px;
+    overflow: scroll;
+}
+ul {
+    margin-top: 0px;
 }
 
 .document {
-    margin-left: 10px;
-    width:50%;
+    width:60%;
     height: 900px;
 }
 .information {
@@ -71,10 +94,16 @@ input:focus {
 }
 
 .date {
+    color: #999;
     font-size: 10px;
-    color: black;
     text-align: center;
 
+}
+div a i{
+    font-size: 20px;
+    align-items: center; 
+    /* justify-content: space-between; */
+    
 }
 
 @media print {
@@ -89,3 +118,57 @@ input:focus {
 
 
 
+/* ------ */
+
+
+
+body {
+font-family: "Lato", sans-serif; 
+margin:0; 
+   
+}
+
+#logo {
+width: 100px;
+margin: 10px; 
+
+}
+
+.navbar {
+  display: flex; 
+  flex-direction: column; 
+  margin: 0; 
+  background-color: rgb(82, 133, 151);
+  overflow-x: hidden;
+  
+}
+
+.icons {
+    font-size: 28px;
+    color: #dfdfdf;
+}
+
+.navbar a {
+  text-decoration: none;
+  font-size: 30px;
+  color:rgb(40, 40, 40);
+  display: flex;
+  align-items: center;
+  justify-content: space-around; 
+  margin: 20px; 
+}
+
+.icons:hover {
+  /* font-size: 1.2em; */
+  color: #ffc53dc4;
+}
+
+.main {
+  margin-left: 50px; /* Same as the width of the navbar */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}

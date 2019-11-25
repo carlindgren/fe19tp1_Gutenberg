@@ -1,5 +1,6 @@
 const info = document.querySelector('.information');
 const addForm = document.querySelector('.addForm');
+const title = document.querySelector('.title')
 const list = document.querySelector('.list');
 const doc = document.querySelector('.document');
 const editorContent = document.querySelector('#editor');
@@ -13,6 +14,8 @@ let currentId; // bör innehålla ID:t på "aktiv" note
 let currentContent;
 
 let activeNote = { active: Object }
+
+
 
 // tar bort infotexten när localstorage.length blir 1.
 let hideInfo = () => {
@@ -42,7 +45,7 @@ addForm.addEventListener('submit', (e) => {
         deleted: false //kvar att göra
     }
 
-
+    document.querySelector('.title-input').value = note.text;
     if (text) { //om input inte är tom kör if-satsen
         //list.innerHTML += `<li id="${note.id}">${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${text}</li>` 
         list.innerHTML += renderNote(note);
@@ -86,7 +89,7 @@ const renderNotes = notes => {
     })
 }
 //skapar en note, renderar vid onload och submit. EN SOPTUNNA :D Det borde bli bra va? :) gud ja verkligen superbra:D
-const renderNote = note => `<li id="${note.id}"> ${note.text} <span class="delete"><i class=" delete far fa-trash-alt"></i></span> <i class=" favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i> <hr> <span class="date"> ${dateFns.format(note.id, `D MMMM YYYY HH${':'}mm`)} </span></li>`
+const renderNote = note => `<li id="${note.id}"> ${note.text} <span class="delete"><i class=" delete far fa-trash-alt"></i></span> <i class=" favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i> <br> <span class="date"> ${dateFns.format(note.id, `D MMMM YYYY HH${':'}mm`)} </span></li>`
 
 // renderNotes(notes)
 
@@ -97,7 +100,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let activeNoteID = loadActiveNote();
     if (activeNoteID > 0) {
         let selectedNote = notes.find(note => note.id == activeNoteID)
-        currentId = activeNoteID;  
+        currentId = activeNoteID;
         quill.setContents(selectedNote.content)
     }
     hideInfo()
@@ -118,15 +121,16 @@ quill.on('text-change', () => {
 list.addEventListener('click', (e) => {
 
     let selectedNote = notes.find(note => note.id == e.target.id || note.id == e.target.parentElement.id || note.id == e.target.parentElement.parentElement.id);
-    console.log(e.target.classList)
+    document.querySelector('.title-input').value = selectedNote.text;
     if (e.target.classList[0] === 'delete') {
         e.target.parentElement.parentElement.remove();
         selectedNote.deleted = true
         qlEditor[0].innerHTML = ""; //varför fungerar inte koden
+
     }
     //stjärnmarkerar
     if (selectedNote.favourite === false && e.target.classList[0] === 'favourite') {
-        selectedNote.favourite = true  
+        selectedNote.favourite = true
         list.innerHTML = '';
         e.target.classList.add('fas')
         e.target.classList.remove('far')
@@ -134,20 +138,20 @@ list.addEventListener('click', (e) => {
         saveNotes()
         // document.getElementById(currentId).childNodes[2].lastChild.classList.add('fas')//.lastChild.classList.add('fas')
         //currentId stämmer med idt på listan??
-        
+
 
     } else if (selectedNote.favourite === true && e.target.classList[0] === 'favourite') {
         selectedNote.favourite = false;
-       // list.innerHTML = '';
-       //  renderNotes(sortFavouriteFalse(notes))
+        // list.innerHTML = '';
+        //  renderNotes(sortFavouriteFalse(notes))
         saveNotes()
         e.target.classList.add('far')
         e.target.classList.remove('fas')
     }
 
-     currentId = selectedNote.id // sätter current id när man klickar på noten 
+    currentId = selectedNote.id // sätter current id när man klickar på noten 
     //let {content, id: currentId} = selectedNote
-     currentContent = selectedNote.content;
+    currentContent = selectedNote.content;
     quill.setContents(currentContent)
 
     activeNote = selectedNote
@@ -166,9 +170,15 @@ const sortFavouriteTrue = (notes, noteID) => {
     })
     return notes
 }
-document.addEventListener('wheel', e => {
-    console.log(e.pageX, e.pageY);
-});
+
+title.addEventListener('keyup', e => {
+
+
+
+})
+// document.addEventListener('wheel', e => {
+//     console.log(e.pageX, e.pageY);
+// });
 
 //flytta ned favoritmarkerade notes i listan.
 /* const sortFavouriteFalse = (notes, noteID) => {
