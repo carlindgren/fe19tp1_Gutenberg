@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.search-input {
+    padding: 10px;
+    background: lightblue;
+}
+
 .text-input {
     padding: 10px;
     background: lightblue;
@@ -41,4 +46,45 @@
 
 .hidden {
     display: none;
+}
+
+
+/*  --------- */
+
+
+
+body {font-family: "Lato", sans-serif;}
+
+.sidebar {
+  height: 100%;
+  width: 50px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(117, 166, 182);
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color:black;
+  display: block;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 50px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
 }
