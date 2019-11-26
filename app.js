@@ -86,7 +86,7 @@ const renderNotes = (notes) => {
     notes.forEach(note => {
         if (note.deleted === false) {
             //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
-
+            list.innerHTML += renderNote(note);
         }
     })
 }
