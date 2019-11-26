@@ -32,6 +32,7 @@ const renderEditor = () => {
     info.remove();
 }
 
+
 addForm.addEventListener('submit', (e) => {
     hideInfo();
     let input = addForm.add.value.trim(); //tar bort mellanrum
@@ -81,7 +82,7 @@ const loadNotes = () => {
 }
 // loadNotes()
 
-const renderNotes = notes => {
+const renderNotes = (notes) => {
     notes.forEach(note => {
         if (note.deleted === false) {
             //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
@@ -92,24 +93,32 @@ const renderNotes = notes => {
 const renderFavourite = notes => {
     notes.forEach(note => {
         if (note.favourite)
-            list.innerHTML += renderNote(note, currentId)
+            list.innerHTML += renderNote(note)
     })
 }
 const renderDeleted = notes => {
     notes.forEach(note => {
         if (note.deleted)
-            list.innerHTML += renderNote(note, currentId)
+            list.innerHTML += renderNote(note)
     })
 }
+
+
 //skapar en note, renderar vid onload och submit. EN SOPTUNNA :D Det borde bli bra va? :) gud ja verkligen superbra:D
-const renderNote = note => `<li id="${note.id}"> ${note.text} <span class="delete"><i class=" delete far fa-trash-alt"></i></span> <i class=" favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i> <br> <span class="date"> ${dateFns.format(note.id, `D MMMM YYYY HH${':'}mm`)} </span></li>`
+const renderNote = (note) => `<li
+id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text} 
+<span class="delete"><i class=" delete far fa-trash-alt"></i></span> 
+<i class=" favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i> <br> 
+<span class="date"> ${dateFns.format(note.id, `D MMMM YYYY HH${':'}mm`)} </span>
+</li>`
+
 
 // renderNotes(notes)
 
 window.addEventListener('DOMContentLoaded', (e) => {
     console.log('ran')
     notes = loadNotes()
-    renderNotes(notes);
+
     let activeNoteID = loadActiveNote();
     if (activeNoteID > 0) {
         let selectedNote = notes.find(note => note.id == activeNoteID)
@@ -118,6 +127,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         currentId = activeNoteID;
         quill.setContents(selectedNote.content)
     }
+    renderNotes(notes);
     hideInfo()
 });
 
@@ -135,16 +145,13 @@ quill.on('text-change', () => {
 
 list.addEventListener('click', (e) => {
     let clickedLI = e.target.closest("li");
-
     let selectedNote = notes.find(note => note.id == clickedLI.id);
-    if (currentId) {
-        document.querySelector('.title-input').value = selectedNote.text;
-    }
-    if (e.target.classList[0] === 'delete') {
-        e.target.parentElement.parentElement.remove();
+    document.querySelector('.title-input').value = selectedNote.text;
+    if (e.target.classList.contains('delete')) {
+        clickedLI.remove();
         selectedNote.deleted = true
         qlEditor[0].innerHTML = ""; //varför fungerar inte koden
-
+        saveNotes();
     }
     //stjärnmarkerar
     if (selectedNote.favourite === false && e.target.classList[0] === 'favourite') {
@@ -188,7 +195,6 @@ const sortFavouriteTrue = (notes, noteID) => {
     })
     return notes
 }
-
 navbar.addEventListener('click', e => {
 
     switch (e.target.id) {
