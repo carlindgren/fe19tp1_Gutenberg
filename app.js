@@ -1,11 +1,12 @@
 const info = document.querySelector('.information');
 const addForm = document.querySelector('.addForm');
-const title = document.querySelector('.title')
+const title = document.querySelector('.title-input')
 const list = document.querySelector('.list');
 const doc = document.querySelector('.document');
 const editorContent = document.querySelector('#editor');
 const saveBtn = document.querySelector('.save')
 const themeBtn = document.querySelector('.theme')
+const navbar = document.querySelector('.navbar')
 let fav = document.querySelector('.favourite')
 let notes = [];
 var qlEditor = document.getElementsByClassName("ql-editor");
@@ -84,8 +85,20 @@ const renderNotes = notes => {
     notes.forEach(note => {
         if (note.deleted === false) {
             //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
-            list.innerHTML += renderNote(note);
+
         }
+    })
+}
+const renderFavourite = notes => {
+    notes.forEach(note => {
+        if (note.favourite)
+            list.innerHTML += renderNote(note, currentId)
+    })
+}
+const renderDeleted = notes => {
+    notes.forEach(note => {
+        if (note.deleted)
+            list.innerHTML += renderNote(note, currentId)
     })
 }
 //skapar en note, renderar vid onload och submit. EN SOPTUNNA :D Det borde bli bra va? :) gud ja verkligen superbra:D
@@ -100,6 +113,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
     let activeNoteID = loadActiveNote();
     if (activeNoteID > 0) {
         let selectedNote = notes.find(note => note.id == activeNoteID)
+        document.querySelector('.title-input').value = selectedNote.text;
+
         currentId = activeNoteID;
         quill.setContents(selectedNote.content)
     }
@@ -119,9 +134,12 @@ quill.on('text-change', () => {
 });
 
 list.addEventListener('click', (e) => {
+    let clickedLI = e.target.closest("li");
 
-    let selectedNote = notes.find(note => note.id == e.target.id || note.id == e.target.parentElement.id || note.id == e.target.parentElement.parentElement.id);
-    document.querySelector('.title-input').value = selectedNote.text;
+    let selectedNote = notes.find(note => note.id == clickedLI.id);
+    if (currentId) {
+        document.querySelector('.title-input').value = selectedNote.text;
+    }
     if (e.target.classList[0] === 'delete') {
         e.target.parentElement.parentElement.remove();
         selectedNote.deleted = true
@@ -171,10 +189,35 @@ const sortFavouriteTrue = (notes, noteID) => {
     return notes
 }
 
+navbar.addEventListener('click', e => {
+
+    switch (e.target.id) {
+        case '1':
+            list.innerHTML = ""
+            renderNotes(notes)
+            break;
+        case '2':
+            list.innerHTML = ""
+            renderFavourite(notes)
+            break;
+        case '3':
+            list.innerHTML = ""
+            renderDeleted(notes)
+            break;
+        default:
+        // code block
+    }
+})
+
 title.addEventListener('keyup', e => {
-
-
-
+    //if currentId
+    let selectedNote = notes.find(note => note.id == currentId);
+    selectedNote.text = e.target.value;
+    document.getElementById(currentId).childNodes[0].textContent = e.target.value;
+    saveNotes()
+    if (e.keyCode === 13) {
+        quill.focus();
+    }
 })
 // document.addEventListener('wheel', e => {
 //     console.log(e.pageX, e.pageY);
