@@ -67,9 +67,7 @@ input:focus {
     background: white;
 } 
 
-.clicked{ 
-    background-color: blue;
-}
+
 .sidebar-container {
     box-shadow: 3px 0 5px -2px #888;
     background-color: whitesmoke;
@@ -171,7 +169,9 @@ margin: 10px;
   margin-left: 50px; /* Same as the width of the navbar */
   padding: 0px 10px;
 }
-
+.clicked{ 
+    background-color: blue!important;
+}
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}

@@ -118,13 +118,14 @@ id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text}
 window.addEventListener('DOMContentLoaded', (e) => {
     console.log('ran')
     notes = loadNotes()
-    renderNotes(notes);
+    
     let activeNoteID = loadActiveNote();
     if (activeNoteID > 0) {
         let selectedNote = notes.find(note => note.id == activeNoteID)
         currentId = activeNoteID;
         quill.setContents(selectedNote.content)
     }
+    renderNotes(notes);
     hideInfo()
 });
 
@@ -141,11 +142,11 @@ quill.on('text-change', () => {
 });
 
 list.addEventListener('click', (e) => {
-
-    let selectedNote = notes.find(note => note.id == e.target.closest("li").id);
+    let clickedLI = e.target.closest("li");
+    let selectedNote = notes.find(note => note.id == clickedLI.id);
     document.querySelector('.title-input').value = selectedNote.text;
-    if (e.target.classList[0] === 'delete') {
-        e.target.parentElement.parentElement.remove();
+    if (e.target.classList.contains('delete')) {
+        clickedLI.remove();
         selectedNote.deleted = true
         qlEditor[0].innerHTML = ""; //varför fungerar inte koden
         saveNotes();
