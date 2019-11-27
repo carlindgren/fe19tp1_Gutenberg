@@ -13,9 +13,51 @@ var qlEditor = document.getElementsByClassName("ql-editor");
 let content;
 let currentId; // bör innehålla ID:t på "aktiv" note
 let currentContent;
-
+let navbarID = 1;
 let activeNote = { active: Object }
 
+const temp1 = {
+    "ops": [
+        {
+          "insert": "Välkommen till Quire, din anteckningsbok på nätet! "
+        },
+        {
+          "attributes": {
+            "header": 1
+          },
+          "insert": "\n"
+        },
+        {
+          "insert": "\nVad roligt att du har valt Quire, ett smartare val att skriva dina anteckningar. Eftersom det är första gången du besöker Quire vill vi gå igenom några enkla steg för att underlätta ditt användande av Quire. \n\n"
+        },
+        {
+          "attributes": {
+            "height": "373",
+            "width": "560"
+          },
+          "insert": {
+            "image": "https://lh5.googleusercontent.com/ZR4LORIEmVWoE1fOJGbAHo6SKaBE2pJCfvFkELXUcIWFz9T1oAHf7684JKMeumvNJ6d1sDOmXiviJFMHiAmrgoHOMqRKIie0AmCI4y-AiV-LnJ2Qi89W6AO8GchhuIGMdWcTRxcu"
+          }
+        },
+        {
+          "insert": "\n\n"
+        },
+        {
+          "attributes": {
+            "bold": true
+          },
+          "insert": "Quirefunktioner "
+        },
+        {
+          "insert": "\nSkriv anteckningar genom att välja rubrik i fältet längst upp till vänster. Ändra din rubrik direkt i dokumentet om du skulle vilja. \n\nSkriv ditt textdokument eller punktlista direkt i vald flik.\n\nQuire autosparar allt du skriver, därför kan du utan bekymmer välja Quire för att skriva tunga och/eller viktiga dokument - ingenting försvinner. \n\nTryck på stjärnan för att favoritmarkera och för att enklare kunna hitta dina viktiga anteckningar. \n\nRadera dina anteckningar genom att klicka på soptunnan.\n\nAnvänd Quires navigationsbar för att hitta alla dina favoritmarkerade anteckningar. Ångrar du en raderad anteckning? Inga problem, även dessa finns sorterade och går att hitta under navbarens soptunna. \n\nHoppas att du ska trivas här, önskar vi på Quire! \n\n"
+        }
+      ]
+    }
+
+    
+    if (localStorage === 0){
+         quill.setContents(temp1);
+    }
 
 
 // tar bort infotexten när localstorage.length blir 1.
@@ -56,6 +98,8 @@ addForm.addEventListener('submit', (e) => {
     }
 
     currentId = notes[notes.length - 1].id; //sätter nuvarande id vid submit.
+    list.innerHTML = ""
+    renderNotes(notes)
     currentContent = notes[notes.length - 1].content //sätter nuvarande content vid submit.
     //saveActiveNote();
     saveNotes();
@@ -143,29 +187,36 @@ quill.on('text-change', () => {
     saveNotes()
 });
 
+
+const activeNavbarItem = (id) => {
+    // hitta alla a taggar. 
+    //loopa igenom dom med forEach.
+    //om 
+}
 list.addEventListener('click', (e) => {
     let clickedLI = e.target.closest("li");
     let selectedNote = notes.find(note => note.id == clickedLI.id);
+    currentId = selectedNote.id
     document.querySelector('.title-input').value = selectedNote.text;
     if (e.target.classList.contains('delete')) {
         clickedLI.remove();
         selectedNote.deleted = true
-        qlEditor[0].innerHTML = ""; //varför fungerar inte koden
+        qlEditor[0].innerHTML = ''; //varför fungerar inte koden
         saveNotes();
     }
     //stjärnmarkerar
-    if (selectedNote.favourite === false && e.target.classList[0] === 'favourite') {
+    if (selectedNote.favourite === false && e.target.classList.contains('favourite')) {
         selectedNote.favourite = true
         list.innerHTML = '';
-        e.target.classList.add('fas')
-        e.target.classList.remove('far')
-        renderNotes(sortFavouriteTrue(notes, selectedNote.id))
+/*         e.target.classList.add('fas')
+        e.target.classList.remove('far') */
+        renderNotes(notes)
         saveNotes()
         // document.getElementById(currentId).childNodes[2].lastChild.classList.add('fas')//.lastChild.classList.add('fas')
         //currentId stämmer med idt på listan??
 
 
-    } else if (selectedNote.favourite === true && e.target.classList[0] === 'favourite') {
+    } else if (selectedNote.favourite === true && e.target.classList.contains('favourite')) {
         selectedNote.favourite = false;
         // list.innerHTML = '';
         //  renderNotes(sortFavouriteFalse(notes))
@@ -173,19 +224,30 @@ list.addEventListener('click', (e) => {
         e.target.classList.add('far')
         e.target.classList.remove('fas')
     }
+    if(clickedLI.id == currentId && navbarID === 1){
+        list.innerHTML = ''
+        renderNotes(notes)
+    } else if (clickedLI.id == currentId && navbarID === 2) {
+        list.innerHTML = ''
+        renderFavourite(notes)
+    }else if (clickedLI.id == currentId && navbarID === 3) {
+        list.innerHTML = ''
+        renderDeleted(notes)
+    }
 
-    currentId = selectedNote.id // sätter current id när man klickar på noten 
+     // sätter current id när man klickar på noten 
     //let {content, id: currentId} = selectedNote
     currentContent = selectedNote.content;
     quill.setContents(currentContent)
 
     activeNote = selectedNote
+    console.log(activeNote)
     saveActiveNote()
     console.log('current id ' + currentId)
 })
 
 //flyttar upp noten om vi favoritmarkerar.
-const sortFavouriteTrue = (notes, noteID) => {
+/* const sortFavouriteTrue = (notes, noteID) => {
     notes.forEach((note, index) => {
         if (note.favourite && noteID == note.id) {
             notes.unshift(note)
@@ -194,20 +256,26 @@ const sortFavouriteTrue = (notes, noteID) => {
         }
     })
     return notes
-}
+} */
 navbar.addEventListener('click', e => {
-
     switch (e.target.id) {
         case '1':
+            navbarID = 1
             list.innerHTML = ""
+            console.log(e)
+            //e.target.classList.add('navbar-clicked')
             renderNotes(notes)
             break;
         case '2':
+            navbarID = 2
             list.innerHTML = ""
+            //e.target.classList.add('navbar-clicked')
             renderFavourite(notes)
             break;
         case '3':
+            navbarID = 3
             list.innerHTML = ""
+            //e.target.classList.add('navbar-clicked')
             renderDeleted(notes)
             break;
         default:

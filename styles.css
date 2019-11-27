@@ -1,14 +1,19 @@
 body {
-    position: absolute;
+    font-family: "Lato", sans-serif; 
+    margin:0; 
+     overflow: clip;  
+    }
+/*     position: absolute; fattar inte heller :/ 
     top: 0;
     left: 0;
     bottom: 20px;
     right: 20px;
-  /*   padding: 0; */ 
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
+    padding: 0; 
+    overflow: hidden; */
+    /*    overflow-y: scroll;
+        overflow-x: hidden; */
 
+/* 
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -27,7 +32,7 @@ body {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(60, 84, 113, 0.4); 
-}
+} */
 
 *,*::before,*::after{
     transition: all .3s ease;
@@ -40,7 +45,7 @@ body {
 }
 #editor {
     border: none;
-    height: 818px;
+    /* height: 818px; */
     /* border-left: 1px solid black; */
 }
 .ql-toolbar.ql-snow {
@@ -65,12 +70,9 @@ width:230px;
 input:focus {
     outline: none;
 }
-/* .search-input {
-    padding: 10px;
-    background: lightblue;
-} */
+
 .text-input {
-    padding: 10px;
+    padding: 20px;
     background: #f8f6f6;
 }
 .title-input{
@@ -88,7 +90,7 @@ input:focus {
     List-style-type: none;
 }
 .list li {
-    padding: 10px;
+    padding: 20px;
     background: whitesmoke;
     border-bottom: 0.5px solid #999;
 }
@@ -104,14 +106,14 @@ input:focus {
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
-    height: 810px;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 ul {
     margin-top: 0px;
 }
 
 .document {
+    margin-left: 8%;
     width:60%;
     height: 900px;
 }
@@ -139,30 +141,13 @@ div a i{
     
 }
 
-@media print {
-.sidebar-container,.list,input,.ql-toolbar {
-    display: none;
-}
-.document{
-    width:100%;
-    height:900px;
-}
-}
 
 
-
-/* ------ */
-
-
-body {
-font-family: "Lato", sans-serif; 
-margin:0; 
-   
-}
 
 #logo {
 width: 100px;
 margin: 10px; 
+margin-bottom: 40px; 
 
 }
 
@@ -193,14 +178,28 @@ margin: 10px;
   /* font-size: 1.2em; */
   color: #ffc53dc4;
 }
+.navbar-clicked {
+    color: #ffc53dc4;
+}
 
 .main {
   margin-left: 50px; /* Same as the width of the navbar */
   padding: 0px 10px;
 }
 .clicked{ 
-    background-color: blue!important;
+    background-color: white!important;
 }
+@media print {
+.sidebar-container,.list,input,.ql-toolbar {
+    display: none;
+}
+.document{
+    width:100%;
+    height:900px;
+    }
+}
+
+
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
