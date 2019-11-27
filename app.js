@@ -7,6 +7,8 @@ const editorContent = document.querySelector('#editor');
 const saveBtn = document.querySelector('.save')
 const themeBtn = document.querySelector('.theme')
 const navbar = document.querySelector('.navbar')
+const print = document.getElementById(4)
+const theme = document.querySelector('#theme')
 let fav = document.querySelector('.favourite')
 let notes = [];
 var qlEditor = document.getElementsByClassName("ql-editor");
@@ -54,10 +56,13 @@ const temp1 = {
       ]
     }
 
-    
-    if (localStorage === 0){
-         quill.setContents(temp1);
-    }
+    //TESTAR
+    // if (localStorage === 0){
+    //      quill.setContents(temp1);
+    // // }
+    // if (typeof(localStorage) === "undefined") {
+    //     localStorage.setContents("temp1", variable);
+    //    var temp1 = localStorage.getItem("temp1");
 
 
 // tar bort infotexten när localstorage.length blir 1.
@@ -189,6 +194,11 @@ quill.on('text-change', () => {
 
 
 const activeNavbarItem = (id) => {
+    let navbar = document.querySelectorAll('.navbar>a')
+    navbar.forEach((item, index) => {
+        console.log(item, id)
+    })
+    console.log(id)
     // hitta alla a taggar. 
     //loopa igenom dom med forEach.
     //om 
@@ -226,6 +236,7 @@ list.addEventListener('click', (e) => {
     }
     if(clickedLI.id == currentId && navbarID === 1){
         list.innerHTML = ''
+        activeNavbarItem(navbarID)
         renderNotes(notes)
     } else if (clickedLI.id == currentId && navbarID === 2) {
         list.innerHTML = ''
@@ -246,17 +257,6 @@ list.addEventListener('click', (e) => {
     console.log('current id ' + currentId)
 })
 
-//flyttar upp noten om vi favoritmarkerar.
-/* const sortFavouriteTrue = (notes, noteID) => {
-    notes.forEach((note, index) => {
-        if (note.favourite && noteID == note.id) {
-            notes.unshift(note)
-            notes.splice(index + 1, 1)
-            console.log(notes)
-        }
-    })
-    return notes
-} */
 navbar.addEventListener('click', e => {
     switch (e.target.id) {
         case '1':
@@ -278,6 +278,18 @@ navbar.addEventListener('click', e => {
             //e.target.classList.add('navbar-clicked')
             renderDeleted(notes)
             break;
+            case '4':
+                window.print();
+            break;
+            case '5':
+                if(theme.href === 'http://127.0.0.1:5500/styles.css'){
+                e.target.classList.add('dark-icon')
+                theme.href="http://127.0.0.1:5500/dark.css";
+                } else {
+                    e.target.classList.remove('dark-icon')
+                    theme.href ="styles.css"
+                }
+            break;
         default:
         // code block
     }
@@ -293,21 +305,7 @@ title.addEventListener('keyup', e => {
         quill.focus();
     }
 })
-// document.addEventListener('wheel', e => {
-//     console.log(e.pageX, e.pageY);
-// });
 
-//flytta ned favoritmarkerade notes i listan.
-/* const sortFavouriteFalse = (notes, noteID) => {
-    notes.forEach((note, index) => {
-        if (note.favourite && noteID == note.id) {
-            notes.push(note)
-            notes.splice(index, 1)
-            console.log(notes)
-        }
-    })
-    return notes
-} */
 
 /* themeBtn.addEventListener('click', (e) => {
     quill.setContents(template1);
