@@ -1,6 +1,6 @@
-/* *,*::before,*::after{
+*,*::before,*::after{
     transition: all .3s ease;
-} */
+}
 
 body {
     font-family: "Lato", sans-serif; 

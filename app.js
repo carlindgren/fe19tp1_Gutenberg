@@ -291,7 +291,7 @@ navbar.addEventListener('click', e => {
 
                 } else if (theme.href === 'http://127.0.0.1:5500/theme.css') {
                     e.target.classList.remove('dark-icon')
-                    theme.href = 'http://127.0.0.1:5500/index.html'
+                    theme.href = ''
                 }
             break;
         default:

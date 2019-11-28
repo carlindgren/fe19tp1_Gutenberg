@@ -1,4 +1,56 @@
 body {
-    color: green;
+    color: white;
+    background-color: #262626;
+}
+.sidebar-container {
+    background-color: #262626;
 }
 
+.fa-trash-alt, .fa-star {
+    color: #bfbfbf;
+}
+
+#editor {
+    color: #bfbfbf;
+    border: none;
+    background-color: #262626;
+}
+input[type=text] {
+    color: #999;
+}
+.list {
+    color: #595959;
+}
+.clicked{
+    background-color: rgb(55, 55, 55)!important; 
+}
+
+.list li {
+    background-color: #4e4e4e;
+    color: white;
+}
+input[type="text"] {
+    background-color: #262626; 
+    color: white;
+}
+
+.icons {
+    color: rgb(211, 211, 211) !important;
+}
+.dark-icon {
+    color: black;
+}
+.navbar {
+    background-color: rgb(42, 70, 80);
+}
+.list li:hover{
+    color:white;
+    background-color: rgb(55, 55, 55);
+}
+.date {
+    color: white;
+}
+.icons:hover {
+    /* font-size: 1.2em; */
+      color: #ffc53dc4 !important;
+  }
