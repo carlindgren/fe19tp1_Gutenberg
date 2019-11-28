@@ -27,8 +27,6 @@ body {
 .ql-toolbar {
     color:white;
 }
-
-
 .fas {
     color: #ffc53d;
 }
@@ -37,14 +35,12 @@ body {
     margin-left: 5px;
 }
 input[type=text] {
-color: #999;
-background-color: #262626;
-font-size: 20px;
-border: none;
-
-width:230px;
+    color: #999;
+    background-color: #262626;
+    font-size: 20px;
+    border: none;
+    width:230px;
 }
-
 input:focus {
     outline: none;
 }
@@ -77,8 +73,6 @@ input:focus {
     cursor: pointer;
     background: black;
 } 
-
-
 .sidebar-container {
     box-shadow: 3px 0 5px -2px #888;
     background-color: #262626;
@@ -89,23 +83,22 @@ input:focus {
 ul {
     margin-top: 0px;
 }
-
 .document {
     background-color: #262626;
     margin-left: 8%;
     width:60%;
     height: 900px;
 }
-.information {
+/* .information {
     margin-left: 10px;
-    /* border: 1px solid black; */
+    /* border: 1px solid black; 
     width:100%;
     height: 900px;
 }
 
 .hidden {
     display: none;
-}
+} */
 
 .date {
     color: #999;

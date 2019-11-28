@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link id="theme" rel="stylesheet" href="styles.css">
+    <link id="mobile" rel="stylemobile" href="mobile.css">
     <!-- skapa css href="dark" -->
     <link rel="shortcut icon" href="/icons/icon.png" type="image/x-icon">
     <link rel="icon" href="/icons/icon.png" type="image/x-icon">
@@ -21,6 +22,7 @@
     <div class="container">
         <div class="navbar">
             <img class="icons" id="logo" src="icons/quire-logo.png" alt="logo">
+            <a href="#burger"><i id="0" class="burger icons fas fa-bars"></i></a>
             <a href="#note"><i id="1" class="icons far fa-sticky-note "></i></a>
             <a href="#fave"><i id="2" class="icons fa fa-star"></i></a>
             <a href="#dark"><i id="5" class="icons fas fa-moon"></i></a>
@@ -42,12 +44,10 @@
 
         </div>
 
-        <p class="information"></p>
-        <div class="document hidden">
+        <!-- <p class="information"></p> hidden-->
+        <div class="document">
             <input class="title-input" type="text" name="title" placeholder="">
-
-
-            <div id="editor">
+            <div id="editor"></div>
             </div>
         </div>
 

@@ -1,4 +1,4 @@
-const info = document.querySelector('.information');
+//const info = document.querySelector('.information');
 const addForm = document.querySelector('.addForm');
 const title = document.querySelector('.title-input')
 const list = document.querySelector('.list');
@@ -65,23 +65,28 @@ const temp1 = {
     //    var temp1 = localStorage.getItem("temp1");
 
 
+
+const renderLandingPage = () => {
+    //set content (temp1)
+    //list.innerHTML titel: startsida
+    // 
+}
+
 // tar bort infotexten när localstorage.length blir 1.
-let hideInfo = () => {
+ let hideInfo = () => {
     if (localStorage.length > 0) {
-        info.remove();
+        //info.remove();
         renderEditor();
     }
-}
+} 
 
 //funktion för att rendera editorn vid submit.
-const renderEditor = () => {
+ const renderEditor = () => {
     doc.classList.remove("hidden");
-    info.remove();
-}
-
-
+    //info.remove();
+} 
 addForm.addEventListener('submit', (e) => {
-    hideInfo();
+    //hideInfo();
     let input = addForm.add.value.trim(); //tar bort mellanrum
     let text = input.charAt(0).toUpperCase() + input.substring(1); //ändrar så att första bokstaven är stor bokstav 
     e.preventDefault();
@@ -99,7 +104,7 @@ addForm.addEventListener('submit', (e) => {
         //list.innerHTML += `<li id="${note.id}">${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${text}</li>` 
         list.innerHTML += renderNote(note);
         notes.push(note)
-        renderEditor()
+        //renderEditor()
     }
 
     currentId = notes[notes.length - 1].id; //sätter nuvarande id vid submit.
@@ -141,7 +146,7 @@ const renderNotes = (notes) => {
 }
 const renderFavourite = notes => {
     notes.forEach(note => {
-        if (note.favourite)
+        if (note.favourite && note.deleted === false)
             list.innerHTML += renderNote(note)
     })
 }
@@ -165,7 +170,6 @@ id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text}
 // renderNotes(notes)
 
 window.addEventListener('DOMContentLoaded', (e) => {
-    console.log('ran')
     notes = loadNotes()
 
     let activeNoteID = loadActiveNote();
@@ -177,7 +181,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         quill.setContents(selectedNote.content)
     }
     renderNotes(notes);
-    hideInfo()
+    //hideInfo()
 });
 
 quill.on('text-change', () => {
@@ -259,6 +263,10 @@ list.addEventListener('click', (e) => {
 
 navbar.addEventListener('click', e => {
     switch (e.target.id) {
+        case '0':
+            navbarID = 1
+            renderNotes(notes)
+            break;        
         case '1':
             navbarID = 1
             list.innerHTML = ""
@@ -269,7 +277,6 @@ navbar.addEventListener('click', e => {
         case '2':
             navbarID = 2
             list.innerHTML = ""
-            //e.target.classList.add('navbar-clicked')
             renderFavourite(notes)
             break;
         case '3':

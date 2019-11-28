@@ -1,26 +1,43 @@
 /* *,*::before,*::after{
     transition: all .3s ease;
 } */
+
 body {
     font-family: "Lato", sans-serif; 
     margin:0; 
     height: 100%; 
     overflow: hidden;
     }
+/* burger */
+::-webkit-scrollbar {
+    display: none;
+}
+
+.burger {
+display: none !important;
+}
+
 .dark-icon {
     color: black !important;
 }
 .container {
     display: flex;
+    height: 100vh;
 }
 .fa-trash-alt, .fa-star {
     color: #999;
 }
 #editor {
-    border: none;
+    border: none; 
 }
+
+.ql-container .ql-editor{
+    height: none; 
+} 
+
 .ql-toolbar.ql-snow {
     border: none;
+    padding-bottom: 30px; 
   /*   border-left: 1px solid black; */
 }
 
@@ -47,6 +64,7 @@ input:focus {
     background: #f8f6f6;
 }
 .title-input{
+    width: 200px;
     margin-left:10px;
     padding: 10px;
 }
@@ -59,7 +77,8 @@ input:focus {
     color: rgb(40, 40, 40);
     padding: 0;
     List-style-type: none;
-    /* overflow: scroll; */
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .list li {
     padding: 20px;
@@ -78,27 +97,27 @@ input:focus {
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
-    /* overflow: scroll; */
+
 }
 ul {
     margin-top: 0px;
 }
 
 .document {
+    display:flex;
+    flex-direction: column;
     margin-left: 8%;
     width:60%;
-    height: 900px;
 }
-.information {
+/* .information {
     margin-left: 10px;
-    /* border: 1px solid black; */
     width:100%;
     height: 900px;
-}
+} */
 
-.hidden {
+/* .hidden {
     display: none;
-}
+} */
 
 .date {
     color: #999;
@@ -109,27 +128,19 @@ ul {
 div a i{
     font-size: 20px;
     align-items: center; 
-    /* justify-content: space-between; */
-    
+    /* justify-content: space-between; */  
 }
-
-
-
 
 #logo {
-width: 100px;
-margin: 5px; 
-margin-bottom: 40px; 
-
+    width: 80px;
+    margin: 5px; 
+    margin-bottom: 10px; 
 }
-
 .navbar {
-  display: flex; 
-  flex-direction: column; 
-  margin: 0; 
-  background-color: rgb(82, 133, 151);
- /*  overflow-x: hidden; */
-  
+    display: flex; 
+    flex-direction: column; 
+    margin: 0; 
+    background-color: rgb(82, 133, 151);
 }
 
 .icons {
@@ -137,35 +148,40 @@ margin-bottom: 40px;
     color: #dfdfdf;
 }
 .navbar a {
-  text-decoration: none;
-  font-size: 30px;
-  color:rgb(40, 40, 40);
-  display: flex;
-  align-items: center;
-  justify-content: space-around; 
-  margin: 20px; 
+    text-decoration: none;
+    font-size: 30px;
+    color:rgb(40, 40, 40);
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    margin: 20px; 
 }
 
 .icons:hover {
   /* font-size: 1.2em; */
-  color: #ffc53dc4;
+    color: #ffc53dc4;
 }
 .navbar-clicked {
     color: #ffc53dc4;
 }
 
 .main {
-  margin-left: 50px; /* Same as the width of the navbar */
-  padding: 0px 10px;
+    margin-left: 50px; /* Same as the width of the navbar */
+    padding: 0px 10px;
 }
 .clicked{ 
     background-color: white!important;
 }
 
-
-
-
-
+/* @media screen and (max-height: 450px) {
+  .navbar {padding-top: 15px;}
+  .navbar a {font-size: 18px;}
+} */
+@media screen and (max-width: 425px) {
+  .sidebar-container {display: none !important;}
+  .burger {display: inline !important;}
+  .navbar {}
+}
 
 @media print {
     @page {
@@ -184,15 +200,7 @@ margin-bottom: 40px;
     height:900px;
     }
 }
-
-
-@media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
-}
-
-
-/*     position: absolute; fattar inte heller :/ 
+/*     position: absolute;  
     top: 0;
     left: 0;
     bottom: 20px;
