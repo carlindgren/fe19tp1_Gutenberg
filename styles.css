@@ -167,6 +167,13 @@ div a i{
 .clicked{ 
     background-color: white!important;
 }
+.showMe {
+    position: fixed;
+    bottom: 68px;
+    width: 100vw;
+    max-height: 200px!important;
+    transition: max-height 0.25s ease-in;
+}
 
 /* @media screen and (max-height: 450px) {
   .navbar {padding-top: 15px;}
@@ -202,6 +209,16 @@ div a i{
     .ql-editor p{
         font-size: 20px; 
     } 
+    .sidebar-container {
+            position: fixed;
+    bottom: 68px;
+    width: 100vw;
+        max-height: 0;
+        transition: max-height 0.15s ease-out;
+    }
+    .addForm {
+        display: none;
+    }
     /* .ql-toolbar.ql-snow{
         width: 100vw; 
         margin: 5px; 

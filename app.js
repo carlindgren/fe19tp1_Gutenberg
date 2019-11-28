@@ -21,48 +21,48 @@ let activeNote = { active: Object }
 const temp1 = {
     "ops": [
         {
-          "insert": "Välkommen till Quire, din anteckningsbok på nätet! "
+            "insert": "Välkommen till Quire, din anteckningsbok på nätet! "
         },
         {
-          "attributes": {
-            "header": 1
-          },
-          "insert": "\n"
+            "attributes": {
+                "header": 1
+            },
+            "insert": "\n"
         },
         {
-          "insert": "\nVad roligt att du har valt Quire, ett smartare val att skriva dina anteckningar. Eftersom det är första gången du besöker Quire vill vi gå igenom några enkla steg för att underlätta ditt användande av Quire. \n\n"
+            "insert": "\nVad roligt att du har valt Quire, ett smartare val att skriva dina anteckningar. Eftersom det är första gången du besöker Quire vill vi gå igenom några enkla steg för att underlätta ditt användande av Quire. \n\n"
         },
         {
-          "attributes": {
-            "height": "373",
-            "width": "560"
-          },
-          "insert": {
-            "image": "https://lh5.googleusercontent.com/ZR4LORIEmVWoE1fOJGbAHo6SKaBE2pJCfvFkELXUcIWFz9T1oAHf7684JKMeumvNJ6d1sDOmXiviJFMHiAmrgoHOMqRKIie0AmCI4y-AiV-LnJ2Qi89W6AO8GchhuIGMdWcTRxcu"
-          }
+            "attributes": {
+                "height": "373",
+                "width": "560"
+            },
+            "insert": {
+                "image": "https://lh5.googleusercontent.com/ZR4LORIEmVWoE1fOJGbAHo6SKaBE2pJCfvFkELXUcIWFz9T1oAHf7684JKMeumvNJ6d1sDOmXiviJFMHiAmrgoHOMqRKIie0AmCI4y-AiV-LnJ2Qi89W6AO8GchhuIGMdWcTRxcu"
+            }
         },
         {
-          "insert": "\n\n"
+            "insert": "\n\n"
         },
         {
-          "attributes": {
-            "bold": true
-          },
-          "insert": "Quirefunktioner "
+            "attributes": {
+                "bold": true
+            },
+            "insert": "Quirefunktioner "
         },
         {
-          "insert": "\nSkriv anteckningar genom att välja rubrik i fältet längst upp till vänster. Ändra din rubrik direkt i dokumentet om du skulle vilja. \n\nSkriv ditt textdokument eller punktlista direkt i vald flik.\n\nQuire autosparar allt du skriver, därför kan du utan bekymmer välja Quire för att skriva tunga och/eller viktiga dokument - ingenting försvinner. \n\nTryck på stjärnan för att favoritmarkera och för att enklare kunna hitta dina viktiga anteckningar. \n\nRadera dina anteckningar genom att klicka på soptunnan.\n\nAnvänd Quires navigationsbar för att hitta alla dina favoritmarkerade anteckningar. Ångrar du en raderad anteckning? Inga problem, även dessa finns sorterade och går att hitta under navbarens soptunna. \n\nHoppas att du ska trivas här, önskar vi på Quire! \n\n"
+            "insert": "\nSkriv anteckningar genom att välja rubrik i fältet längst upp till vänster. Ändra din rubrik direkt i dokumentet om du skulle vilja. \n\nSkriv ditt textdokument eller punktlista direkt i vald flik.\n\nQuire autosparar allt du skriver, därför kan du utan bekymmer välja Quire för att skriva tunga och/eller viktiga dokument - ingenting försvinner. \n\nTryck på stjärnan för att favoritmarkera och för att enklare kunna hitta dina viktiga anteckningar. \n\nRadera dina anteckningar genom att klicka på soptunnan.\n\nAnvänd Quires navigationsbar för att hitta alla dina favoritmarkerade anteckningar. Ångrar du en raderad anteckning? Inga problem, även dessa finns sorterade och går att hitta under navbarens soptunna. \n\nHoppas att du ska trivas här, önskar vi på Quire! \n\n"
         }
-      ]
-    }
+    ]
+}
 
-    //TESTAR
-    // if (localStorage === 0){
-    //      quill.setContents(temp1);
-    // // }
-    // if (typeof(localStorage) === "undefined") {
-    //     localStorage.setContents("temp1", variable);
-    //    var temp1 = localStorage.getItem("temp1");
+//TESTAR
+// if (localStorage === 0){
+//      quill.setContents(temp1);
+// // }
+// if (typeof(localStorage) === "undefined") {
+//     localStorage.setContents("temp1", variable);
+//    var temp1 = localStorage.getItem("temp1");
 
 
 
@@ -73,18 +73,18 @@ const renderLandingPage = () => {
 }
 
 // tar bort infotexten när localstorage.length blir 1.
- let hideInfo = () => {
+let hideInfo = () => {
     if (localStorage.length > 0) {
         //info.remove();
         renderEditor();
     }
-} 
+}
 
 //funktion för att rendera editorn vid submit.
- const renderEditor = () => {
+const renderEditor = () => {
     doc.classList.remove("hidden");
     //info.remove();
-} 
+}
 addForm.addEventListener('submit', (e) => {
     //hideInfo();
     let input = addForm.add.value.trim(); //tar bort mellanrum
@@ -222,8 +222,8 @@ list.addEventListener('click', (e) => {
     if (selectedNote.favourite === false && e.target.classList.contains('favourite')) {
         selectedNote.favourite = true
         list.innerHTML = '';
-/*         e.target.classList.add('fas')
-        e.target.classList.remove('far') */
+        /*         e.target.classList.add('fas')
+                e.target.classList.remove('far') */
         renderNotes(notes)
         saveNotes()
         // document.getElementById(currentId).childNodes[2].lastChild.classList.add('fas')//.lastChild.classList.add('fas')
@@ -238,19 +238,19 @@ list.addEventListener('click', (e) => {
         e.target.classList.add('far')
         e.target.classList.remove('fas')
     }
-    if(clickedLI.id == currentId && navbarID === 1){
+    if (clickedLI.id == currentId && navbarID === 1) {
         list.innerHTML = ''
         activeNavbarItem(navbarID)
         renderNotes(notes)
     } else if (clickedLI.id == currentId && navbarID === 2) {
         list.innerHTML = ''
         renderFavourite(notes)
-    }else if (clickedLI.id == currentId && navbarID === 3) {
+    } else if (clickedLI.id == currentId && navbarID === 3) {
         list.innerHTML = ''
         renderDeleted(notes)
     }
 
-     // sätter current id när man klickar på noten 
+    // sätter current id när man klickar på noten 
     //let {content, id: currentId} = selectedNote
     currentContent = selectedNote.content;
     quill.setContents(currentContent)
@@ -262,13 +262,14 @@ list.addEventListener('click', (e) => {
 })
 
 navbar.addEventListener('click', e => {
-    switch (e.target.id) {       
+    switch (e.target.id) {
         case '1':
             navbarID = 1
             list.innerHTML = ""
             console.log(e)
             //e.target.classList.add('navbar-clicked')
             renderNotes(notes)
+            document.querySelector(".sidebar-container").classList.toggle("showMe");
             break;
         case '2':
             navbarID = 2
@@ -281,18 +282,18 @@ navbar.addEventListener('click', e => {
             //e.target.classList.add('navbar-clicked')
             renderDeleted(notes)
             break;
-            case '4':
-                window.print();
+        case '4':
+            window.print();
             break;
-            case '5':
-                if(theme.href === 'http://127.0.0.1:5500/index.html'){
+        case '5':
+            if (theme.href === 'http://127.0.0.1:5500/index.html') {
                 e.target.classList.add('dark-icon')
-                theme.href="theme.css";
+                theme.href = "theme.css";
 
-                } else if (theme.href === 'http://127.0.0.1:5500/theme.css') {
-                    e.target.classList.remove('dark-icon')
-                    theme.href = 'http://127.0.0.1:5500/index.html'
-                }
+            } else if (theme.href === 'http://127.0.0.1:5500/theme.css') {
+                e.target.classList.remove('dark-icon')
+                theme.href = 'http://127.0.0.1:5500/index.html'
+            }
             break;
         default:
         // code block
