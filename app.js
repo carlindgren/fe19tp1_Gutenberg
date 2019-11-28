@@ -285,14 +285,24 @@ navbar.addEventListener('click', e => {
                 window.print();
             break;
             case '5':
-                if(theme.href === 'http://127.0.0.1:5500/index.html'){
+                    var lastThree = theme.href.substr(theme.href.length - 3); // => "css"
+                    if(lastThree !== 'css'){
+                        e.target.classList.add('dark-icon')
+                        theme.href="theme.css";
+        
+                        } else  {
+                            e.target.classList.remove('dark-icon')
+                            theme.href = ''
+                        }
+
+                /* if(theme.href === 'http://127.0.0.1:5500/index.html'){
                 e.target.classList.add('dark-icon')
                 theme.href="theme.css";
 
                 } else if (theme.href === 'http://127.0.0.1:5500/theme.css') {
                     e.target.classList.remove('dark-icon')
                     theme.href = ''
-                }
+                } */
             break;
         default:
         // code block

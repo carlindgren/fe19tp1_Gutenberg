@@ -41,7 +41,8 @@ input[type="text"] {
     color: black;
 }
 .navbar {
-    background-color: rgb(42, 70, 80);
+    background-color: rgb(90,44,56);
+    b/* ackground-color: rgb(42, 70, 80); */
 }
 .list li:hover{
     color:white;
