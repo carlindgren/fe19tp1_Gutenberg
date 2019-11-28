@@ -22,7 +22,6 @@ body {
 .ql-toolbar.ql-snow {
     color: white;
     border: none;
-  /*   border-left: 1px solid black; */
 }
 .ql-toolbar {
     color:white;
@@ -128,10 +127,7 @@ margin-bottom: 40px;
   flex-direction: column; 
   margin: 0; 
   background-color: rgb(41, 66, 75);
- /*  overflow-x: hidden; */
-  
 }
-
 .icons {
     font-size: 28px;
     color: #dfdfdf;
@@ -155,7 +151,6 @@ margin-bottom: 40px;
 .navbar-clicked {
     color: #ffc53dc4;
 }
-
 .main {
   margin-left: 50px; /* Same as the width of the navbar */
   padding: 0px 10px;
@@ -164,29 +159,19 @@ margin-bottom: 40px;
     background-color: black!important;
 }
 
-
-
-
-
-
 @media print {
     @page {
         size: auto;
-        margin: 0;
-             }
-/* .sidebar-container,.list,input,.ql-toolbar {
-    display: none;
-} */
+        margin: 0; 
+    }
 * :not(#ql-editor) {
     display: none;
 } 
-
 #ql-editor{
     width:100%;
     height:900px;
     }
 }
-
 
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}

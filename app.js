@@ -262,11 +262,7 @@ list.addEventListener('click', (e) => {
 })
 
 navbar.addEventListener('click', e => {
-    switch (e.target.id) {
-        case '0':
-            navbarID = 1
-            renderNotes(notes)
-            break;        
+    switch (e.target.id) {       
         case '1':
             navbarID = 1
             list.innerHTML = ""
@@ -289,12 +285,13 @@ navbar.addEventListener('click', e => {
                 window.print();
             break;
             case '5':
-                if(theme.href === 'http://127.0.0.1:5500/styles.css'){
+                if(theme.href === 'http://127.0.0.1:5500/index.html'){
                 e.target.classList.add('dark-icon')
-                theme.href="http://127.0.0.1:5500/dark.css";
-                } else {
+                theme.href="theme.css";
+
+                } else if (theme.href === 'http://127.0.0.1:5500/theme.css') {
                     e.target.classList.remove('dark-icon')
-                    theme.href ="styles.css"
+                    theme.href = 'http://127.0.0.1:5500/index.html'
                 }
             break;
         default:
