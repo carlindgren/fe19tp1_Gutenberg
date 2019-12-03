@@ -68,20 +68,20 @@ const renderLandingPage = () => {
     //list.innerHTML titel: startsida
     // 
 }
-
-// tar bort infotexten när localstorage.length blir 1.
- let hideInfo = () => {
-    if (localStorage.length > 0) {
-        //info.remove();
-        renderEditor();
-    }
-} 
-
 //funktion för att rendera editorn vid submit.
  const renderEditor = () => {
     doc.classList.remove("hidden");
     //info.remove();
 } 
+// tar bort infotexten när localstorage.length blir 1.
+ let hideInfo = () => {
+    if (localStorage.length > 0) {
+        renderEditor();
+    }
+} 
+
+
+
 addForm.addEventListener('submit', (e) => {
     //hideInfo();
     let input = addForm.add.value.trim(); //tar bort mellanrum
@@ -188,7 +188,6 @@ quill.on('text-change', () => {
     if (currentId) { //om vi har ett currentID, leta rätt på nuvarande note.
         let selectedNote = notes.find(note => note.id == currentId);
         selectedNote.content = quill.getContents();
-        activeNote = selectedNote // lägger in innehållet i active note i vårt nya objekt.
     }
     saveNotes()
 });
@@ -199,18 +198,15 @@ const activeNavbarItem = (id) => {
     console.log(navbarA)
     navbarA.forEach((item, index) => {
         console.log(item, id, index)
-        if(index !== id - 1) {
+        if (index !== id - 1) {
             item.firstChild.classList.remove('navbar-clicked')
         } else {
             item.firstChild.classList.add('navbar-clicked')
         }
-        
+
     })
-    console.log(id)
-    // hitta alla a taggar. 
-    //loopa igenom dom med forEach.
-    //om 
 }
+
 list.addEventListener('click', (e) => {
     let clickedLI = e.target.closest("li");
     let selectedNote = notes.find(note => note.id == clickedLI.id);
@@ -264,7 +260,7 @@ list.addEventListener('click', (e) => {
 })
 
 navbar.addEventListener('click', e => {
-    switch (e.target.id) {       
+    switch (e.target.id) {
         case '1':
             navbarID = 1
             list.innerHTML = ""
@@ -277,27 +273,26 @@ navbar.addEventListener('click', e => {
             activeNavbarItem(navbarID)
             renderFavourite(notes)
             break;
+        case '3':
+            let lastThree = theme.href.substr(theme.href.length - 3); // => "css"
+            if (lastThree !== 'css') {
+                e.target.classList.add('dark-icon')
+                theme.href = "theme.css";
+
+            } else {
+                e.target.classList.remove('dark-icon')
+                theme.href = ''
+            }
+            break;
+        case '4':
+            window.print();
+            break;
         case '5':
             navbarID = 5
             list.innerHTML = ""
             activeNavbarItem(navbarID)
             renderDeleted(notes)
             break;
-            case '4':
-                window.print();
-            break;
-            case '3':
-                    let lastThree = theme.href.substr(theme.href.length - 3); // => "css"
-                    if(lastThree !== 'css'){
-                        e.target.classList.add('dark-icon')
-                        theme.href="theme.css";
-        
-                        } else  {
-                            e.target.classList.remove('dark-icon')
-                            theme.href = ''
-                        }
-            break;
-        //default:
     }
 })
 

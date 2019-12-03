@@ -34,7 +34,6 @@ body {
 .ql-toolbar.ql-snow {
     border: none;
     padding-bottom: 30px; 
-  /*   border-left: 1px solid black; */
 }
 
 .fas {
@@ -87,7 +86,6 @@ input:focus {
     background: white;
 } 
 
-
 .sidebar-container {
     box-shadow: 3px 0 5px -2px #888;
     background-color: whitesmoke;
@@ -126,12 +124,6 @@ div a i{
     align-items: center; 
     /* justify-content: space-between; */  
 }
-/* .delete-popup {
-    z-index: 1;
-    width: 50px;
-    height: 50px;
-    background: burlywood;
-} */
 
 #logo {
     width: 80px;
