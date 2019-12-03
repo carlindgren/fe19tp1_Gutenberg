@@ -260,7 +260,7 @@ list.addEventListener('click', (e) => {
 navbar.addEventListener('click', e => {
     switch (e.target.id) {       
         case '1':
-            navb 
+            navbarID = 1
             list.innerHTML = ""
             console.log(e)
             //e.target.classList.add('navbar-clicked')
