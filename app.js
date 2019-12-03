@@ -194,16 +194,23 @@ quill.on('text-change', () => {
 });
 
 //skapa en funktion för aktiva navknappar.
-/* const activeNavbarItem = (id) => {
-    let navbar = document.querySelectorAll('.navbar>a')
-    navbar.forEach((item, index) => {
-        console.log(item, id)
+const activeNavbarItem = (id) => {
+    let navbarA = document.querySelectorAll('.navbar>a')
+    console.log(navbarA)
+    navbarA.forEach((item, index) => {
+        console.log(item, id, index)
+        if(index !== id - 1) {
+            item.firstChild.classList.remove('navbar-clicked')
+        } else {
+            item.firstChild.classList.add('navbar-clicked')
+        }
+        
     })
     console.log(id)
     // hitta alla a taggar. 
     //loopa igenom dom med forEach.
     //om 
-} */
+}
 list.addEventListener('click', (e) => {
     let clickedLI = e.target.closest("li");
     let selectedNote = notes.find(note => note.id == clickedLI.id);
@@ -236,7 +243,6 @@ list.addEventListener('click', (e) => {
     }
     if (clickedLI.id == currentId && navbarID === 1) {
         list.innerHTML = ''
-       // activeNavbarItem(navbarID)
         renderNotes(notes)
     } else if (clickedLI.id == currentId && navbarID === 2) {
         list.innerHTML = ''
@@ -262,25 +268,25 @@ navbar.addEventListener('click', e => {
         case '1':
             navbarID = 1
             list.innerHTML = ""
-            console.log(e)
-            //e.target.classList.add('navbar-clicked')
+            activeNavbarItem(navbarID)
             renderNotes(notes)
             break;
         case '2':
             navbarID = 2
             list.innerHTML = ""
+            activeNavbarItem(navbarID)
             renderFavourite(notes)
             break;
-        case '3':
-            navbarID = 3
+        case '5':
+            navbarID = 5
             list.innerHTML = ""
-            //e.target.classList.add('navbar-clicked')
+            activeNavbarItem(navbarID)
             renderDeleted(notes)
             break;
             case '4':
                 window.print();
             break;
-            case '5':
+            case '3':
                     let lastThree = theme.href.substr(theme.href.length - 3); // => "css"
                     if(lastThree !== 'css'){
                         e.target.classList.add('dark-icon')
@@ -291,8 +297,7 @@ navbar.addEventListener('click', e => {
                             theme.href = ''
                         }
             break;
-        default:
-        // code block
+        //default:
     }
 })
 

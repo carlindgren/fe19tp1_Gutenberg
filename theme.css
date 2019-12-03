@@ -28,6 +28,9 @@ input[type=text] {
 .clicked{
     background-color: rgba(97, 60, 119, 0.541)!important; 
 }
+.navbar-clicked {
+    color: #ffc53dc4 !important;
+}
 
 .list li {
     background-color: #4e4e4e;
@@ -43,10 +46,10 @@ input[type="text"] {
 }
 
 .icons {
-    color: rgb(211, 211, 211) !important;
+    color: rgb(211, 211, 211);
 }
 .dark-icon {
-    color: black;
+    color: black !important;
 }
 .navbar {
     background-color: rgba(97, 60, 119, 0.726);
