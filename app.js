@@ -16,7 +16,8 @@ let content;
 let currentId; // bör innehålla ID:t på "aktiv" note
 let currentContent;
 let navbarID = 1;
-let activeNote = { active: Object }
+let activeNoteID = { active: Object}
+let firstID;
 
 const temp1 = {
     "ops": [
@@ -56,13 +57,9 @@ const temp1 = {
       ]
     }
 
-    //TESTAR
-    // if (localStorage === 0){
-    //      quill.setContents(temp1);
-    // // }
-    // if (typeof(localStorage) === "undefined") {
-    //     localStorage.setContents("temp1", variable);
-    //    var temp1 = localStorage.getItem("temp1");
+    if (localStorage.length === 0){
+         quill.setContents(temp1);
+    }
 
 
 
@@ -93,10 +90,10 @@ addForm.addEventListener('submit', (e) => {
 
     const note = {
         text,
-        id: Date.now(), // bra med tanke på att vi ska visa när dokumenten skapades.
-        content, // lägga till ett nytt objekt för att spara documentet och kunna rendera.
-        favourite: false, //detta är kvar att göra
-        deleted: false //kvar att göra
+        id: Date.now(),
+        content,
+        favourite: false,
+        deleted: false 
     }
 
     document.querySelector('.title-input').value = note.text;
@@ -151,14 +148,14 @@ const renderFavourite = notes => {
     })
 }
 const renderDeleted = notes => {
-    notes.forEach(note => {
+    notes.forEach(note => { 
         if (note.deleted)
             list.innerHTML += renderNote(note)
     })
 }
 
 
-//skapar en note, renderar vid onload och submit. EN SOPTUNNA :D Det borde bli bra va? :) gud ja verkligen superbra:D
+//skapar en note, renderar vid onload och submit och klick på anteckning.
 const renderNote = (note) => `<li
 id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text} 
 <span class="delete"><i class=" delete far fa-trash-alt"></i></span> 
@@ -181,6 +178,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         quill.setContents(selectedNote.content)
     }
     renderNotes(notes);
+    console.log('ran')
     //hideInfo()
 });
 
@@ -189,15 +187,14 @@ quill.on('text-change', () => {
     console.log(currentId)
     if (currentId) { //om vi har ett currentID, leta rätt på nuvarande note.
         let selectedNote = notes.find(note => note.id == currentId);
-        //selectedNote.content = currentContent
         selectedNote.content = quill.getContents();
         activeNote = selectedNote // lägger in innehållet i active note i vårt nya objekt.
     }
     saveNotes()
 });
 
-
-const activeNavbarItem = (id) => {
+//skapa en funktion för aktiva navknappar.
+/* const activeNavbarItem = (id) => {
     let navbar = document.querySelectorAll('.navbar>a')
     navbar.forEach((item, index) => {
         console.log(item, id)
@@ -206,12 +203,20 @@ const activeNavbarItem = (id) => {
     // hitta alla a taggar. 
     //loopa igenom dom med forEach.
     //om 
-}
+} */
 list.addEventListener('click', (e) => {
     let clickedLI = e.target.closest("li");
     let selectedNote = notes.find(note => note.id == clickedLI.id);
     currentId = selectedNote.id
     document.querySelector('.title-input').value = selectedNote.text;
+    if (selectedNote.deleted === true && e.target.classList.contains('delete')) {
+        notes = notes.filter(note => note.id != currentId)
+        renderDeleted(notes)
+        console.log(clickedLI.id)
+        console.log('du har försökt radera en borttagen note.')
+        //skapa variabeln firstID. tilldela currentId = firstID vid delete.
+    }
+
     if (e.target.classList.contains('delete')) {
         clickedLI.remove();
         selectedNote.deleted = true
@@ -222,35 +227,26 @@ list.addEventListener('click', (e) => {
     if (selectedNote.favourite === false && e.target.classList.contains('favourite')) {
         selectedNote.favourite = true
         list.innerHTML = '';
-/*         e.target.classList.add('fas')
-        e.target.classList.remove('far') */
         renderNotes(notes)
         saveNotes()
-        // document.getElementById(currentId).childNodes[2].lastChild.classList.add('fas')//.lastChild.classList.add('fas')
-        //currentId stämmer med idt på listan??
-
 
     } else if (selectedNote.favourite === true && e.target.classList.contains('favourite')) {
         selectedNote.favourite = false;
-        // list.innerHTML = '';
-        //  renderNotes(sortFavouriteFalse(notes))
         saveNotes()
-        e.target.classList.add('far')
-        e.target.classList.remove('fas')
     }
-    if(clickedLI.id == currentId && navbarID === 1){
+    if (clickedLI.id == currentId && navbarID === 1) {
         list.innerHTML = ''
-        activeNavbarItem(navbarID)
+       // activeNavbarItem(navbarID)
         renderNotes(notes)
     } else if (clickedLI.id == currentId && navbarID === 2) {
         list.innerHTML = ''
         renderFavourite(notes)
-    }else if (clickedLI.id == currentId && navbarID === 3) {
+    } else if (clickedLI.id == currentId && navbarID === 3) {
         list.innerHTML = ''
         renderDeleted(notes)
     }
 
-     // sätter current id när man klickar på noten 
+    // sätter current id när man klickar på noten 
     //let {content, id: currentId} = selectedNote
     currentContent = selectedNote.content;
     quill.setContents(currentContent)
@@ -264,7 +260,7 @@ list.addEventListener('click', (e) => {
 navbar.addEventListener('click', e => {
     switch (e.target.id) {       
         case '1':
-            navbarID = 1
+            navb 
             list.innerHTML = ""
             console.log(e)
             //e.target.classList.add('navbar-clicked')
@@ -285,7 +281,7 @@ navbar.addEventListener('click', e => {
                 window.print();
             break;
             case '5':
-                    var lastThree = theme.href.substr(theme.href.length - 3); // => "css"
+                    let lastThree = theme.href.substr(theme.href.length - 3); // => "css"
                     if(lastThree !== 'css'){
                         e.target.classList.add('dark-icon')
                         theme.href="theme.css";
@@ -294,15 +290,6 @@ navbar.addEventListener('click', e => {
                             e.target.classList.remove('dark-icon')
                             theme.href = ''
                         }
-
-                /* if(theme.href === 'http://127.0.0.1:5500/index.html'){
-                e.target.classList.add('dark-icon')
-                theme.href="theme.css";
-
-                } else if (theme.href === 'http://127.0.0.1:5500/theme.css') {
-                    e.target.classList.remove('dark-icon')
-                    theme.href = ''
-                } */
             break;
         default:
         // code block
@@ -319,8 +306,3 @@ title.addEventListener('keyup', e => {
         quill.focus();
     }
 })
-
-
-/* themeBtn.addEventListener('click', (e) => {
-    quill.setContents(template1);
-}) */
