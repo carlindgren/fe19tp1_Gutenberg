@@ -8,7 +8,8 @@ body {
     height: 100%; 
     overflow: hidden;
     scrollbar-width: none;
-    }
+    letter-spacing: 1.5px;
+}
 ::-webkit-scrollbar {
     display: none;
 }
@@ -103,16 +104,6 @@ ul {
     margin-left: 8%;
     width:60%;
 }
-/* .information {
-    margin-left: 10px;
-    width:100%;
-    height: 900px;
-} */
-
-/* .hidden {
-    display: none;
-} */
-
 .date {
     color: #999;
     font-size: 10px;
@@ -168,12 +159,6 @@ div a i{
     background-color: white!important;
 }
 
-/* @media screen and (max-height: 450px) {
-  .navbar {padding-top: 15px;}
-  .navbar a {font-size: 18px;}
-} */
-
-
 @media screen and (max-width: 425px) {
     
     
@@ -215,16 +200,13 @@ div a i{
 
 }
 @media print {
-/*     @page {
-        size: auto;
-        margin: 0;
-             } */
 .navbar,.sidebar-container,.list,input,.ql-toolbar {
     display: none;
 } 
-/* * :not(.document) {
-    display: none;
-}  */
+@page {
+    size: auto;
+    margin: 10px;
+         }
 
 .document{
     width:100%;
