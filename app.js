@@ -1,4 +1,3 @@
-//const info = document.querySelector('.information');
 const addForm = document.querySelector('.addForm');
 const title = document.querySelector('.title-input')
 const list = document.querySelector('.list');
@@ -16,7 +15,7 @@ let content;
 let currentId; // bör innehålla ID:t på "aktiv" note
 let currentContent;
 let navbarID = 1;
-let activeNoteID = { active: Object}
+let activeNoteID; // = { active: Object}
 let firstID;
 
 const temp1 = {
@@ -83,7 +82,6 @@ const renderLandingPage = () => {
 
 
 addForm.addEventListener('submit', (e) => {
-    //hideInfo();
     let input = addForm.add.value.trim(); //tar bort mellanrum
     let text = input.charAt(0).toUpperCase() + input.substring(1); //ändrar så att första bokstaven är stor bokstav 
     e.preventDefault();
@@ -97,19 +95,20 @@ addForm.addEventListener('submit', (e) => {
     }
 
     document.querySelector('.title-input').value = note.text;
-    if (text) { //om input inte är tom kör if-satsen
-        //list.innerHTML += `<li id="${note.id}">${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${text}</li>` 
+    if (text) {
         list.innerHTML += renderNote(note);
         notes.push(note)
-        //renderEditor()
     }
 
-    currentId = notes[notes.length - 1].id; //sätter nuvarande id vid submit.
+    let selectedNote = notes.find(list => list.text == note.text)
+    currentId = selectedNote.id;
+    activeNoteID = currentId 
     list.innerHTML = ""
+    currentContent = selectedNote.content
     renderNotes(notes)
-    currentContent = notes[notes.length - 1].content //sätter nuvarande content vid submit.
-    //saveActiveNote();
     saveNotes();
+    saveActiveNote();
+    
     qlEditor[0].innerHTML = "";
     addForm.reset()
 });
@@ -119,43 +118,39 @@ const saveNotes = () => {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 const saveActiveNote = () => {
-    localStorage.setItem('activeNote', JSON.stringify(activeNote.id))//activeNote    
+    localStorage.setItem('activeNote', JSON.stringify(activeNoteID))//activeNote    
 }
 const loadActiveNote = () => {
     return localStorage.getItem('activeNote') ? JSON.parse(localStorage.getItem('activeNote')) : 0;
 
 }
 const loadNotes = () => {
-    //om null, ger oss tom array. inget att ladda.
-
-    console.log(notes.length) // kollar hur många notes som finns.
-    return localStorage.getItem('notes') ? JSON.parse(localStorage.getItem("notes")) : []; //returnerar notes för att passera in i renderNotes();
+    return localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : []; //returnerar notes för att passera in i renderNotes();
 }
-// loadNotes()
 
 const renderNotes = (notes) => {
     notes.forEach(note => {
         if (note.deleted === false) {
             //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
-            list.innerHTML += renderNote(note);
+            list.innerHTML += (renderNote(note));
         }
     })
 }
 const renderFavourite = notes => {
     notes.forEach(note => {
-        if (note.favourite && note.deleted === false)
+        if (note.favourite && note.deleted === false) {
             list.innerHTML += renderNote(note)
+        }
     })
 }
 const renderDeleted = notes => {
-    notes.forEach(note => { 
-        if (note.deleted)
+    notes.forEach(note => {
+        if (note.deleted) {
             list.innerHTML += renderNote(note)
+        }
     })
 }
 
-
-//skapar en note, renderar vid onload och submit och klick på anteckning.
 const renderNote = (note) => `<li
 id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text} 
 <span class="delete"><i class=" delete far fa-trash-alt"></i></span> 
@@ -164,12 +159,10 @@ id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text}
 </li>`
 
 
-// renderNotes(notes)
-
 window.addEventListener('DOMContentLoaded', (e) => {
     notes = loadNotes()
 
-    let activeNoteID = loadActiveNote();
+    activeNoteID = loadActiveNote();
     if (activeNoteID > 0) {
         let selectedNote = notes.find(note => note.id == activeNoteID)
         document.querySelector('.title-input').value = selectedNote.text;
@@ -189,12 +182,10 @@ quill.on('text-change', () => {
     saveNotes()
 });
 
-//skapa en funktion för aktiva navknappar.
 const activeNavbarItem = (id) => {
     let navbarA = document.querySelectorAll('.navbar>a')
     console.log(navbarA)
     navbarA.forEach((item, index) => {
-        console.log(item, id, index)
         if (index !== id - 1) {
             item.firstChild.classList.remove('navbar-clicked')
         } else {
@@ -209,17 +200,17 @@ list.addEventListener('click', (e) => {
     currentId = selectedNote.id
     document.querySelector('.title-input').value = selectedNote.text;
 
-    if (selectedNote.deleted === true && e.target.classList.contains('delete')) {
+/*     if (selectedNote.deleted === true && e.target.classList.contains('delete')) {
         notes = notes.filter(note => note.id != currentId)
         renderDeleted(notes) 
         console.log('du har raderat en borttagen note.')
         //skapa variabeln firstID. tilldela currentId = firstID vid delete.
-    }
+    } */
 
     if (e.target.classList.contains('delete')) {
         clickedLI.remove();
         selectedNote.deleted = true
-        qlEditor[0].innerHTML = ''; //varför fungerar inte koden
+        qlEditor[0].innerHTML = '';
         saveNotes();
     }
     //stjärnmarkerar
@@ -289,8 +280,7 @@ navbar.addEventListener('click', e => {
     }
 })
 
-title.addEventListener('keyup', e => {
-    //if currentId
+title.addEventListener('keyup', e => {  
     let selectedNote = notes.find(note => note.id == currentId);
     selectedNote.text = e.target.value;
     document.getElementById(currentId).childNodes[0].textContent = e.target.value;
