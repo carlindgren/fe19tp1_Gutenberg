@@ -1,0 +1,215 @@
+*,*::before,*::after{
+    transition: all .3s ease;
+}
+
+body {
+    font-family: "Lato", sans-serif; 
+    margin:0; 
+    height: 100%; 
+    overflow: hidden;
+    scrollbar-width: none;
+    letter-spacing: 1.5px;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+.dark-icon {
+    color: black !important;
+}
+.container {
+    display: flex;
+    height: 100vh;
+}
+.fa-trash-alt, .fa-star {
+    color: #999;
+}
+#editor {
+    border: none; 
+}
+
+.ql-container .ql-editor{
+    height: none; 
+} 
+
+.ql-toolbar.ql-snow {
+    border: none;
+    padding-bottom: 30px; 
+}
+
+.fas {
+    color: #ffc53d;
+}
+.far, .fas {
+    float: right;
+    margin-left: 5px;
+}
+input[type=text] {
+font-size: 20px;
+border: none;
+
+width:230px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.text-input {
+    padding: 20px;
+    background: #f8f6f6;
+}
+.title-input{
+    width: 200px;
+    margin-left:10px;
+    padding: 10px;
+}
+.navbuttons {
+    flex-direction: column;
+    List-style-type: none;
+}
+.list {
+    font-family: sans-serif; 
+    color: rgb(40, 40, 40);
+    padding: 0;
+    List-style-type: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.list li {
+    padding: 20px;
+    background: whitesmoke;
+    border-bottom: 0.5px solid rgb(153, 153, 153);
+}
+.list li:hover{
+    border-right: none;
+    cursor: pointer;
+    background: white;
+} 
+
+.sidebar-container {
+    box-shadow: 3px 0 5px -2px #888;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+
+}
+ul {
+    margin-top: 0px;
+}
+
+.document {
+    display:flex;
+    flex-direction: column;
+    margin-left: 8%;
+    width:60%;
+}
+.date {
+    color: #999;
+    font-size: 10px;
+    text-align: center;
+
+}
+div a i{
+    font-size: 20px;
+    align-items: center; 
+    /* justify-content: space-between; */  
+}
+
+#logo {
+    width: 80px;
+    margin: 5px; 
+    margin-bottom: 10px; 
+}
+.navbar {
+    display: flex; 
+    flex-direction: column; 
+    margin: 0; 
+    background-color: rgba(97, 60, 119, 0.726);
+    /* background-color: rgb(82, 133, 151); */
+}
+
+.icons {
+    font-size: 28px;
+    color: #dfdfdf;
+}
+.navbar a {
+    text-decoration: none;
+    font-size: 30px;
+    color:rgb(40, 40, 40);
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    margin: 20px; 
+}
+
+.icons:hover {
+  /* font-size: 1.2em; */
+    color: #ffc53dc4;
+}
+.navbar-clicked {
+    color: #ffc53dc4;
+}
+
+.main {
+    margin-left: 50px; /* Same as the width of the navbar */
+    padding: 0px 10px;
+}
+.clicked{ 
+    background-color: white!important;
+}
+
+@media screen and (max-width: 425px) {
+    
+    
+    .container {
+        flex-direction: column-reverse;
+        height: 100vh;
+        width: 100vw;
+    }
+    .navbar {
+        flex-direction: row;
+        justify-content: space-around;
+        
+    }
+    .list {
+        height: 150px;
+        overflow: scroll;
+    }
+    #logo {
+        display: none;
+    }
+    .document {
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 90%;
+        height: 500px;
+        overflow: scroll;
+    }
+    .ql-editor p{
+        font-size: 20px; 
+    } 
+    /* .ql-toolbar.ql-snow{
+        width: 100vw; 
+        margin: 5px; 
+    } */
+    /* ol{
+        margin: 0; 
+    } */
+/*   .sidebar-container {display: none !important;} */
+
+}
+@media print {
+.navbar,.sidebar-container,.list,.text-input,.ql-toolbar {
+    display: none;
+} 
+@page {
+    size: auto;
+    margin: 10px;
+         }
+
+.document{
+    width:100%;
+    height:900px;
+    }
+}
