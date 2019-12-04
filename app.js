@@ -78,10 +78,10 @@ let hideInfo = () => {
 }
 
 //funktion för att rendera editorn vid submit.
-const renderEditor = () => {
-    doc.classList.remove("hidden");
-    //info.remove();
-}
+// const renderEditor = () => {
+//     doc.classList.remove("hidden");
+//     //info.remove();
+// }
 addForm.addEventListener('submit', (e) => {
     let input = addForm.add.value.trim(); //tar bort mellanrum
     let text = input.charAt(0).toUpperCase() + input.substring(1); //ändrar så att första bokstaven är stor bokstav 
@@ -250,7 +250,7 @@ navbar.addEventListener('click', e => {
             list.innerHTML = ""
             activeNavbarItem(navbarID)
             renderNotes(notes)
-            document.querySelector(".sidebar-container").classList.toggle("showMe");
+            //document.querySelector(".sidebar-container").classList.toggle("showMe");
             break;
         case '2':
             navbarID = 2

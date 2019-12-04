@@ -140,13 +140,13 @@ div a i {
 .clicked { 
     background-color: white!important;
 }
-.showMe {
+/* .showMe {
     position: fixed;
     bottom: 68px;
     width: 100vw;
     max-height: 200px!important;
     transition: max-height 0.25s ease-in;
-}
+} */
 
 @media screen and (max-width: 425px) {  
     .container {
@@ -175,16 +175,16 @@ div a i {
     .ql-editor p {
         font-size: 20px; 
     } 
-    .sidebar-container {
+    /* .sidebar-container {
         position: fixed;
         bottom: 68px;
         width: 100vw;
         max-height: 0;
         transition: max-height 0.15s ease-out;
-    }
-    .addForm {
+    } */
+    /* .addForm {
         display: none;
-    }
+    } */
 }
 @media print {
 .navbar,.sidebar-container,.list,.text-input,.ql-toolbar {
