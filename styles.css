@@ -34,7 +34,8 @@ body {
 
 .ql-toolbar.ql-snow {
     border: none;
-    padding-bottom: 30px; 
+    padding-bottom: 30px;
+    box-shadow: 0px 0.2px #888; 
 }
 
 .fas {

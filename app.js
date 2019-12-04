@@ -18,7 +18,7 @@ let navbarID = 1;
 let activeNoteID; // = { active: Object}
 let firstID;
 
-const temp1 = {
+const appInfo = {
     "ops": [
         {
           "insert": "Välkommen till Quire, din anteckningsbok på nätet! "
@@ -57,10 +57,8 @@ const temp1 = {
     }
 
     if (localStorage.length === 0){
-         quill.setContents(temp1);
+         quill.setContents(appInfo);
     }
-
-
 
 const renderLandingPage = () => {
     //set content (temp1)
@@ -78,8 +76,6 @@ const renderLandingPage = () => {
         renderEditor();
     }
 } 
-
-
 
 addForm.addEventListener('submit', (e) => {
     let input = addForm.add.value.trim(); //tar bort mellanrum
