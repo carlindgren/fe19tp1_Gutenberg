@@ -159,7 +159,7 @@ const renderDeleted = notes => {
 const renderNote = (note) => `<li
 id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text} 
 <span class="delete"><i class=" delete far fa-trash-alt"></i></span> 
-<i class=" favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i> <br> 
+<i class="favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i> <br> 
 <span class="date"> ${dateFns.format(note.id, `D MMMM YYYY HH${':'}mm`)} </span>
 </li>`
 
@@ -173,13 +173,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
     if (activeNoteID > 0) {
         let selectedNote = notes.find(note => note.id == activeNoteID)
         document.querySelector('.title-input').value = selectedNote.text;
-
         currentId = activeNoteID;
         quill.setContents(selectedNote.content)
     }
     renderNotes(notes);
-    console.log('ran')
-    //hideInfo()
 });
 
 quill.on('text-change', () => {
@@ -203,7 +200,6 @@ const activeNavbarItem = (id) => {
         } else {
             item.firstChild.classList.add('navbar-clicked')
         }
-
     })
 }
 
@@ -212,11 +208,11 @@ list.addEventListener('click', (e) => {
     let selectedNote = notes.find(note => note.id == clickedLI.id);
     currentId = selectedNote.id
     document.querySelector('.title-input').value = selectedNote.text;
+
     if (selectedNote.deleted === true && e.target.classList.contains('delete')) {
         notes = notes.filter(note => note.id != currentId)
-        renderDeleted(notes)
-        console.log(clickedLI.id)
-        console.log('du har försökt radera en borttagen note.')
+        renderDeleted(notes) 
+        console.log('du har raderat en borttagen note.')
         //skapa variabeln firstID. tilldela currentId = firstID vid delete.
     }
 
@@ -247,11 +243,8 @@ list.addEventListener('click', (e) => {
         list.innerHTML = ''
         renderDeleted(notes)
     }
-
-    // sätter current id när man klickar på noten 
-    //let {content, id: currentId} = selectedNote
-    currentContent = selectedNote.content;
-    quill.setContents(currentContent)
+    //currentContent = selectedNote.content;
+    quill.setContents(selectedNote.content)
 
     activeNote = selectedNote
     console.log(activeNote)

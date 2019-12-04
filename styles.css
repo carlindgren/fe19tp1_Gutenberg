@@ -200,7 +200,7 @@ div a i{
 
 }
 @media print {
-.navbar,.sidebar-container,.list,input,.ql-toolbar {
+.navbar,.sidebar-container,.list,.text-input,.ql-toolbar {
     display: none;
 } 
 @page {
