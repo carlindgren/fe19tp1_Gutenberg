@@ -6,7 +6,7 @@ var quill = new Quill('#editor', {
           [{ 'list': 'ordered'}, { 'list': 'bullet' }]
         ]
       },
-      placeholder: 'Compose an epic...',
+      /* placeholder: 'Compose an epic...', */
       theme: 'snow'  // or 'bubble'
   });   
 

@@ -1,4 +1,64 @@
 body {
-    color: green;
+    color: white;
+    background-color: #262626;
 }
-
+.sidebar-container {
+    background-color: #262626;
+}
+.fa-trash-alt, .fa-star {
+    color:#bfbfbf;
+}
+.fas {
+    color: rgba(255, 0, 255, 0.5);
+}
+#editor {
+    color: #bfbfbf;
+    border: none;
+    background-color: #262626;
+}
+.list li {
+    border-bottom: 0.5px solid #262626;
+    box-shadow: 5px 0 7px -5px rgb(255, 0, 212);
+}
+input[type=text] {
+    color: #999;
+}
+.list {
+    color: #595959;
+}
+.clicked {
+    background-color: rgba(97, 60, 119, 0.541)!important; 
+}
+.navbar-clicked {
+    color: rgba(255, 0, 255, 0.5) !important;
+}
+.list li {
+    background-color: #4e4e4e;
+    color: white;
+}
+input[type="text"] {
+    background-color: #262626; 
+    color: white;
+}
+.sidebar-container {
+    box-shadow: 5px 0 7px -5px rgba(245, 29, 234, 0.24);
+}
+.icons {
+    color: rgb(211, 211, 211);
+}
+.dark-icon {
+    color: black !important;
+}
+.navbar {
+    background-color: rgba(97, 60, 119, 0.726);
+}
+.list li:hover {
+    color:white;
+    background-color: rgba(97, 60, 119, 0.726);
+}
+.date {
+    color: white;
+}
+.icons:hover {
+      color:rgba(255, 0, 255, 0.5) !important;
+}

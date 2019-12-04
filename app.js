@@ -1,4 +1,3 @@
-//const info = document.querySelector('.information');
 const addForm = document.querySelector('.addForm');
 const title = document.querySelector('.title-input')
 const list = document.querySelector('.list');
@@ -16,9 +15,10 @@ let content;
 let currentId; // bör innehålla ID:t på "aktiv" note
 let currentContent;
 let navbarID = 1;
-let activeNote = { active: Object }
+let activeNoteID; // = { active: Object}
+let firstID;
 
-const temp1 = {
+const appInfo = {
     "ops": [
         {
             "insert": "Välkommen till Quire, din anteckningsbok på nätet! "
@@ -56,26 +56,23 @@ const temp1 = {
     ]
 }
 
-//TESTAR
-// if (localStorage === 0){
-//      quill.setContents(temp1);
-// // }
-// if (typeof(localStorage) === "undefined") {
-//     localStorage.setContents("temp1", variable);
-//    var temp1 = localStorage.getItem("temp1");
-
-
+    if (localStorage.length === 0){
+         quill.setContents(appInfo);
+    }
 
 const renderLandingPage = () => {
     //set content (temp1)
     //list.innerHTML titel: startsida
     // 
 }
-
+//funktion för att rendera editorn vid submit.
+ const renderEditor = () => {
+    doc.classList.remove("hidden");
+    //info.remove();
+} 
 // tar bort infotexten när localstorage.length blir 1.
 let hideInfo = () => {
     if (localStorage.length > 0) {
-        //info.remove();
         renderEditor();
     }
 }
@@ -86,33 +83,33 @@ const renderEditor = () => {
     //info.remove();
 }
 addForm.addEventListener('submit', (e) => {
-    //hideInfo();
     let input = addForm.add.value.trim(); //tar bort mellanrum
     let text = input.charAt(0).toUpperCase() + input.substring(1); //ändrar så att första bokstaven är stor bokstav 
     e.preventDefault();
 
     const note = {
         text,
-        id: Date.now(), // bra med tanke på att vi ska visa när dokumenten skapades.
-        content, // lägga till ett nytt objekt för att spara documentet och kunna rendera.
-        favourite: false, //detta är kvar att göra
-        deleted: false //kvar att göra
+        id: Date.now(),
+        content,
+        favourite: false,
+        deleted: false 
     }
 
     document.querySelector('.title-input').value = note.text;
-    if (text) { //om input inte är tom kör if-satsen
-        //list.innerHTML += `<li id="${note.id}">${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${text}</li>` 
+    if (text) {
         list.innerHTML += renderNote(note);
         notes.push(note)
-        //renderEditor()
     }
 
-    currentId = notes[notes.length - 1].id; //sätter nuvarande id vid submit.
+    let selectedNote = notes.find(list => list.text == note.text)
+    currentId = selectedNote.id;
+    activeNoteID = currentId 
     list.innerHTML = ""
+    currentContent = selectedNote.content
     renderNotes(notes)
-    currentContent = notes[notes.length - 1].content //sätter nuvarande content vid submit.
-    //saveActiveNote();
     saveNotes();
+    saveActiveNote();
+    
     qlEditor[0].innerHTML = "";
     addForm.reset()
 });
@@ -122,66 +119,58 @@ const saveNotes = () => {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 const saveActiveNote = () => {
-    localStorage.setItem('activeNote', JSON.stringify(activeNote.id))//activeNote    
+    localStorage.setItem('activeNote', JSON.stringify(activeNoteID))//activeNote    
 }
 const loadActiveNote = () => {
     return localStorage.getItem('activeNote') ? JSON.parse(localStorage.getItem('activeNote')) : 0;
 
 }
 const loadNotes = () => {
-    //om null, ger oss tom array. inget att ladda.
-
-    console.log(notes.length) // kollar hur många notes som finns.
-    return localStorage.getItem('notes') ? JSON.parse(localStorage.getItem("notes")) : []; //returnerar notes för att passera in i renderNotes();
+    return localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : []; //returnerar notes för att passera in i renderNotes();
 }
-// loadNotes()
 
 const renderNotes = (notes) => {
     notes.forEach(note => {
         if (note.deleted === false) {
             //list.innerHTML += `<li id="${note.id}"> ${dateFns.format(note.id, 'dddd Do MMMM YYYY')} ${note.text}</li>`
-            list.innerHTML += renderNote(note);
+            list.innerHTML += (renderNote(note));
         }
     })
 }
 const renderFavourite = notes => {
     notes.forEach(note => {
-        if (note.favourite && note.deleted === false)
+        if (note.favourite && note.deleted === false) {
             list.innerHTML += renderNote(note)
+        }
     })
 }
 const renderDeleted = notes => {
     notes.forEach(note => {
-        if (note.deleted)
+        if (note.deleted) {
             list.innerHTML += renderNote(note)
+        }
     })
 }
 
-
-//skapar en note, renderar vid onload och submit. EN SOPTUNNA :D Det borde bli bra va? :) gud ja verkligen superbra:D
 const renderNote = (note) => `<li
 id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text} 
 <span class="delete"><i class=" delete far fa-trash-alt"></i></span> 
-<i class=" favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i> <br> 
+<i class="favourite ${note.favourite ? 'fas' : 'far'} fa-star"></i> <br> 
 <span class="date"> ${dateFns.format(note.id, `D MMMM YYYY HH${':'}mm`)} </span>
 </li>`
 
 
-// renderNotes(notes)
-
 window.addEventListener('DOMContentLoaded', (e) => {
     notes = loadNotes()
 
-    let activeNoteID = loadActiveNote();
+    activeNoteID = loadActiveNote();
     if (activeNoteID > 0) {
         let selectedNote = notes.find(note => note.id == activeNoteID)
         document.querySelector('.title-input').value = selectedNote.text;
-
         currentId = activeNoteID;
         quill.setContents(selectedNote.content)
     }
     renderNotes(notes);
-    //hideInfo()
 });
 
 quill.on('text-change', () => {
@@ -189,58 +178,55 @@ quill.on('text-change', () => {
     console.log(currentId)
     if (currentId) { //om vi har ett currentID, leta rätt på nuvarande note.
         let selectedNote = notes.find(note => note.id == currentId);
-        //selectedNote.content = currentContent
         selectedNote.content = quill.getContents();
-        activeNote = selectedNote // lägger in innehållet i active note i vårt nya objekt.
     }
     saveNotes()
 });
 
-
 const activeNavbarItem = (id) => {
-    let navbar = document.querySelectorAll('.navbar>a')
-    navbar.forEach((item, index) => {
-        console.log(item, id)
+    let navbarA = document.querySelectorAll('.navbar>a')
+    console.log(navbarA)
+    navbarA.forEach((item, index) => {
+        if (index !== id - 1) {
+            item.firstChild.classList.remove('navbar-clicked')
+        } else {
+            item.firstChild.classList.add('navbar-clicked')
+        }
     })
-    console.log(id)
-    // hitta alla a taggar. 
-    //loopa igenom dom med forEach.
-    //om 
 }
+
 list.addEventListener('click', (e) => {
     let clickedLI = e.target.closest("li");
     let selectedNote = notes.find(note => note.id == clickedLI.id);
     currentId = selectedNote.id
     document.querySelector('.title-input').value = selectedNote.text;
+
+/*     if (selectedNote.deleted === true && e.target.classList.contains('delete')) {
+        notes = notes.filter(note => note.id != currentId)
+        renderDeleted(notes) 
+        console.log('du har raderat en borttagen note.')
+        //skapa variabeln firstID. tilldela currentId = firstID vid delete.
+    } */
+
     if (e.target.classList.contains('delete')) {
         clickedLI.remove();
         selectedNote.deleted = true
-        qlEditor[0].innerHTML = ''; //varför fungerar inte koden
+        qlEditor[0].innerHTML = '';
         saveNotes();
     }
     //stjärnmarkerar
     if (selectedNote.favourite === false && e.target.classList.contains('favourite')) {
         selectedNote.favourite = true
         list.innerHTML = '';
-        /*         e.target.classList.add('fas')
-                e.target.classList.remove('far') */
         renderNotes(notes)
         saveNotes()
-        // document.getElementById(currentId).childNodes[2].lastChild.classList.add('fas')//.lastChild.classList.add('fas')
-        //currentId stämmer med idt på listan??
-
 
     } else if (selectedNote.favourite === true && e.target.classList.contains('favourite')) {
         selectedNote.favourite = false;
-        // list.innerHTML = '';
-        //  renderNotes(sortFavouriteFalse(notes))
         saveNotes()
-        e.target.classList.add('far')
-        e.target.classList.remove('fas')
     }
     if (clickedLI.id == currentId && navbarID === 1) {
         list.innerHTML = ''
-        activeNavbarItem(navbarID)
         renderNotes(notes)
     } else if (clickedLI.id == currentId && navbarID === 2) {
         list.innerHTML = ''
@@ -249,12 +235,8 @@ list.addEventListener('click', (e) => {
         list.innerHTML = ''
         renderDeleted(notes)
     }
-
-    // sätter current id när man klickar på noten 
-    //let {content, id: currentId} = selectedNote
-    currentContent = selectedNote.content;
-    quill.setContents(currentContent)
-
+    //currentContent = selectedNote.content;
+    quill.setContents(selectedNote.content)
     activeNote = selectedNote
     console.log(activeNote)
     saveActiveNote()
@@ -266,42 +248,39 @@ navbar.addEventListener('click', e => {
         case '1':
             navbarID = 1
             list.innerHTML = ""
-            console.log(e)
-            //e.target.classList.add('navbar-clicked')
+            activeNavbarItem(navbarID)
             renderNotes(notes)
             document.querySelector(".sidebar-container").classList.toggle("showMe");
             break;
         case '2':
             navbarID = 2
             list.innerHTML = ""
+            activeNavbarItem(navbarID)
             renderFavourite(notes)
             break;
         case '3':
-            navbarID = 3
-            list.innerHTML = ""
-            //e.target.classList.add('navbar-clicked')
-            renderDeleted(notes)
+            let lastThree = theme.href.substr(theme.href.length - 3); // => "css"
+            if (lastThree !== 'css') {
+                e.target.classList.add('dark-icon')
+                theme.href = "theme.css";
+            } else {
+                e.target.classList.remove('dark-icon')
+                theme.href = ''
+            }
             break;
         case '4':
             window.print();
             break;
         case '5':
-            if (theme.href === 'http://127.0.0.1:5500/index.html') {
-                e.target.classList.add('dark-icon')
-                theme.href = "theme.css";
-
-            } else if (theme.href === 'http://127.0.0.1:5500/theme.css') {
-                e.target.classList.remove('dark-icon')
-                theme.href = 'http://127.0.0.1:5500/index.html'
-            }
+            navbarID = 5
+            list.innerHTML = ""
+            activeNavbarItem(navbarID)
+            renderDeleted(notes)
             break;
-        default:
-        // code block
     }
 })
 
-title.addEventListener('keyup', e => {
-    //if currentId
+title.addEventListener('keyup', e => {  
     let selectedNote = notes.find(note => note.id == currentId);
     selectedNote.text = e.target.value;
     document.getElementById(currentId).childNodes[0].textContent = e.target.value;
@@ -310,8 +289,3 @@ title.addEventListener('keyup', e => {
         quill.focus();
     }
 })
-
-
-/* themeBtn.addEventListener('click', (e) => {
-    quill.setContents(template1);
-}) */

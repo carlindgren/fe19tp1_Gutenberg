@@ -1,17 +1,17 @@
-/* *,*::before,*::after{
+*,*::before,*::after {
     transition: all .3s ease;
-} */
-
+}
 body {
     font-family: "Lato", sans-serif; 
     margin:0; 
     height: 100%; 
     overflow: hidden;
-    }
+    scrollbar-width: none;
+    letter-spacing: 1.5px;
+}
 ::-webkit-scrollbar {
     display: none;
 }
-
 .dark-icon {
     color: black !important;
 }
@@ -25,17 +25,14 @@ body {
 #editor {
     border: none; 
 }
-
-.ql-container .ql-editor{
+.ql-container .ql-editor {
     height: none; 
 } 
-
 .ql-toolbar.ql-snow {
     border: none;
-    padding-bottom: 30px; 
-  /*   border-left: 1px solid black; */
+    padding-bottom: 30px;
+    box-shadow: 0px 0.2px #888; 
 }
-
 .fas {
     color: #ffc53d;
 }
@@ -44,21 +41,18 @@ body {
     margin-left: 5px;
 }
 input[type=text] {
-font-size: 20px;
-border: none;
-
-width:230px;
+    font-size: 20px;
+    border: none;
+    width:230px;
 }
-
 input:focus {
     outline: none;
 }
-
 .text-input {
     padding: 20px;
     background: #f8f6f6;
 }
-.title-input{
+.title-input {
     width: 200px;
     margin-left:10px;
     padding: 10px;
@@ -80,52 +74,35 @@ input:focus {
     background: whitesmoke;
     border-bottom: 0.5px solid #999;
 }
-.list li:hover{
+.list li:hover {
     border-right: none;
     cursor: pointer;
     background: white;
 } 
-
-
 .sidebar-container {
     box-shadow: 3px 0 5px -2px #888;
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
-
 }
 ul {
     margin-top: 0px;
 }
-
 .document {
     display:flex;
     flex-direction: column;
     margin-left: 8%;
     width:60%;
 }
-/* .information {
-    margin-left: 10px;
-    width:100%;
-    height: 900px;
-} */
-
-/* .hidden {
-    display: none;
-} */
-
 .date {
     color: #999;
     font-size: 10px;
     text-align: center;
-
 }
-div a i{
+div a i {
     font-size: 20px;
     align-items: center; 
-    /* justify-content: space-between; */  
 }
-
 #logo {
     width: 80px;
     margin: 5px; 
@@ -135,9 +112,8 @@ div a i{
     display: flex; 
     flex-direction: column; 
     margin: 0; 
-    background-color: rgb(82, 133, 151);
+    background-color: rgba(97, 60, 119, 0.726); 
 }
-
 .icons {
     font-size: 28px;
     color: #dfdfdf;
@@ -151,20 +127,17 @@ div a i{
     justify-content: space-around; 
     margin: 20px; 
 }
-
 .icons:hover {
-  /* font-size: 1.2em; */
     color: #ffc53dc4;
 }
 .navbar-clicked {
     color: #ffc53dc4;
 }
-
 .main {
-    margin-left: 50px; /* Same as the width of the navbar */
+    margin-left: 50px; 
     padding: 0px 10px;
 }
-.clicked{ 
+.clicked { 
     background-color: white!important;
 }
 .showMe {
@@ -175,13 +148,7 @@ div a i{
     transition: max-height 0.25s ease-in;
 }
 
-/* @media screen and (max-height: 450px) {
-  .navbar {padding-top: 15px;}
-  .navbar a {font-size: 18px;}
-} */
-@media screen and (max-width: 425px) {
-    
-    
+@media screen and (max-width: 425px) {  
     .container {
         flex-direction: column-reverse;
         height: 100vh;
@@ -189,8 +156,7 @@ div a i{
     }
     .navbar {
         flex-direction: row;
-        justify-content: space-around;
-        
+        justify-content: space-around;   
     }
     .list {
         height: 150px;
@@ -206,43 +172,30 @@ div a i{
         height: 500px;
         overflow: scroll;
     }
-    .ql-editor p{
+    .ql-editor p {
         font-size: 20px; 
     } 
     .sidebar-container {
-            position: fixed;
-    bottom: 68px;
-    width: 100vw;
+        position: fixed;
+        bottom: 68px;
+        width: 100vw;
         max-height: 0;
         transition: max-height 0.15s ease-out;
     }
     .addForm {
         display: none;
     }
-    /* .ql-toolbar.ql-snow{
-        width: 100vw; 
-        margin: 5px; 
-    } */
-    /* ol{
-        margin: 0; 
-    } */
-/*   .sidebar-container {display: none !important;} */
-
-
+}
 @media print {
-    @page {
-        size: auto;
-        margin: 0;
-             }
-/* .sidebar-container,.list,input,.ql-toolbar {
-    display: none;
-} */
-* :not(.document) {
+.navbar,.sidebar-container,.list,.text-input,.ql-toolbar {
     display: none;
 } 
-
-.document{
+@page {
+    size: auto;
+    margin: 10px;
+}
+.document {
     width:100%;
     height:900px;
     }
-}}
+}
