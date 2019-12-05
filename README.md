@@ -1,7 +1,7 @@
 # Quire - notebook in the browser
-# # fe19tp1_Gutenberg
+## fe19tp1_Gutenberg
 
-# # författare
+## författare
 
 * **Helin Akkus**
 * **Josefin Brorson**
