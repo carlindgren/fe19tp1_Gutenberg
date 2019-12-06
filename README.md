@@ -16,13 +16,14 @@
 ## Framtida utveckling
  - Styling för anteckingslistan i mobil vy
  - Permanent borttagning av anteckningar
- - utveckla ett backend för att spara ned anteckningar
+ - Utveckla ett backend för att spara ned anteckningar
+ - Vid ny anteckning bör senaste landa överst i listan
 
 ## Författare
- **Helin Akkus**
- **Josefin Brorson**
- **Dilana Yavuz**
- **Carl Lindgren**
+ **Helin Akkus**  
+ **Josefin Brorson**  
+ **Dilana Yavuz**  
+ **Carl Lindgren**  
 
 **[googleDocs]** - för att få reda på mer om projektet, gå in på dokumentet.
 
