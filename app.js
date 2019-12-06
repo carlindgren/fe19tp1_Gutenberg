@@ -2,21 +2,16 @@ const addForm = document.querySelector('.addForm');
 const title = document.querySelector('.title-input')
 const list = document.querySelector('.list');
 const doc = document.querySelector('.document');
-const editorContent = document.querySelector('#editor');
-const saveBtn = document.querySelector('.save')
-const themeBtn = document.querySelector('.theme')
 const navbar = document.querySelector('.navbar')
 const print = document.getElementById(4)
 const theme = document.querySelector('#theme')
-let fav = document.querySelector('.favourite')
+const qlEditor = document.getElementsByClassName("ql-editor");
 let notes = [];
-var qlEditor = document.getElementsByClassName("ql-editor");
 let content;
-let currentId; // bör innehålla ID:t på "aktiv" note
+let currentId;
 let currentContent;
 let navbarID = 1;
-let activeNoteID; // = { active: Object}
-let firstID;
+let activeNoteID;
 
 const appInfo = {
     "ops": [
@@ -56,35 +51,12 @@ const appInfo = {
     ]
 }
 
-    if (localStorage.length === 0){
-         quill.setContents(appInfo);
-    }
-
-const renderLandingPage = () => {
-    //set content (temp1)
-    //list.innerHTML titel: startsida
-    // 
+if (localStorage.length === 0) {
+    quill.setContents(appInfo);
 }
-//funktion för att rendera editorn vid submit.
- const renderEditor = () => {
-    doc.classList.remove("hidden");
-    //info.remove();
-} 
-// tar bort infotexten när localstorage.length blir 1.
-let hideInfo = () => {
-    if (localStorage.length > 0) {
-        renderEditor();
-    }
-}
-
-//funktion för att rendera editorn vid submit.
-// const renderEditor = () => {
-//     doc.classList.remove("hidden");
-//     //info.remove();
-// }
 addForm.addEventListener('submit', (e) => {
-    let input = addForm.add.value.trim(); //tar bort mellanrum
-    let text = input.charAt(0).toUpperCase() + input.substring(1); //ändrar så att första bokstaven är stor bokstav 
+    let input = addForm.add.value.trim();
+    let text = input.charAt(0).toUpperCase() + input.substring(1);
     e.preventDefault();
 
     const note = {
@@ -92,7 +64,7 @@ addForm.addEventListener('submit', (e) => {
         id: Date.now(),
         content,
         favourite: false,
-        deleted: false 
+        deleted: false
     }
 
     document.querySelector('.title-input').value = note.text;
@@ -103,13 +75,13 @@ addForm.addEventListener('submit', (e) => {
 
     let selectedNote = notes.find(list => list.text == note.text)
     currentId = selectedNote.id;
-    activeNoteID = currentId 
+    activeNoteID = currentId
     list.innerHTML = ""
     currentContent = selectedNote.content
     renderNotes(notes)
     saveNotes();
     saveActiveNote();
-    
+
     qlEditor[0].innerHTML = "";
     addForm.reset()
 });
@@ -119,7 +91,7 @@ const saveNotes = () => {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 const saveActiveNote = () => {
-    localStorage.setItem('activeNote', JSON.stringify(activeNoteID))//activeNote    
+    localStorage.setItem('activeNote', JSON.stringify(activeNoteID))
 }
 const loadActiveNote = () => {
     return localStorage.getItem('activeNote') ? JSON.parse(localStorage.getItem('activeNote')) : 0;
@@ -162,7 +134,6 @@ id="${note.id}" class="${note.id == currentId ? 'clicked' : ''}"> ${note.text}
 
 window.addEventListener('DOMContentLoaded', (e) => {
     notes = loadNotes()
-
     activeNoteID = loadActiveNote();
     if (activeNoteID > 0) {
         let selectedNote = notes.find(note => note.id == activeNoteID)
@@ -175,7 +146,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
 quill.on('text-change', () => {
     currentContent = quill.getContents()
-    console.log(currentId)
     if (currentId) { //om vi har ett currentID, leta rätt på nuvarande note.
         let selectedNote = notes.find(note => note.id == currentId);
         selectedNote.content = quill.getContents();
@@ -185,7 +155,6 @@ quill.on('text-change', () => {
 
 const activeNavbarItem = (id) => {
     let navbarA = document.querySelectorAll('.navbar>a')
-    console.log(navbarA)
     navbarA.forEach((item, index) => {
         if (index !== id - 1) {
             item.firstChild.classList.remove('navbar-clicked')
@@ -201,12 +170,10 @@ list.addEventListener('click', (e) => {
     currentId = selectedNote.id
     document.querySelector('.title-input').value = selectedNote.text;
 
-/*     if (selectedNote.deleted === true && e.target.classList.contains('delete')) {
-        notes = notes.filter(note => note.id != currentId)
-        renderDeleted(notes) 
-        console.log('du har raderat en borttagen note.')
-        //skapa variabeln firstID. tilldela currentId = firstID vid delete.
-    } */
+    /*     if (selectedNote.deleted === true && e.target.classList.contains('delete')) {
+            notes = notes.filter(note => note.id != currentId)
+            renderDeleted(notes)
+        } */
 
     if (e.target.classList.contains('delete')) {
         clickedLI.remove();
@@ -214,7 +181,6 @@ list.addEventListener('click', (e) => {
         qlEditor[0].innerHTML = '';
         saveNotes();
     }
-    //stjärnmarkerar
     if (selectedNote.favourite === false && e.target.classList.contains('favourite')) {
         selectedNote.favourite = true
         list.innerHTML = '';
@@ -235,12 +201,10 @@ list.addEventListener('click', (e) => {
         list.innerHTML = ''
         renderDeleted(notes)
     }
-    //currentContent = selectedNote.content;
+
     quill.setContents(selectedNote.content)
     activeNote = selectedNote
-    console.log(activeNote)
     saveActiveNote()
-    console.log('current id ' + currentId)
 })
 
 navbar.addEventListener('click', e => {
@@ -280,7 +244,7 @@ navbar.addEventListener('click', e => {
     }
 })
 
-title.addEventListener('keyup', e => {  
+title.addEventListener('keyup', e => {
     let selectedNote = notes.find(note => note.id == currentId);
     selectedNote.text = e.target.value;
     document.getElementById(currentId).childNodes[0].textContent = e.target.value;
