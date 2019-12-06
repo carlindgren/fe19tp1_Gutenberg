@@ -153,6 +153,7 @@ quill.on('text-change', () => {
     saveNotes()
 });
 
+//kollar vilken länk på navbaren som är klickad.
 const activeNavbarItem = (id) => {
     let navbarA = document.querySelectorAll('.navbar>a')
     navbarA.forEach((item, index) => {
@@ -223,7 +224,7 @@ navbar.addEventListener('click', e => {
             renderFavourite(notes)
             break;
         case '3':
-            let lastThree = theme.href.substr(theme.href.length - 3); // => "css"
+            let lastThree = theme.href.substr(theme.href.length - 3);
             if (lastThree !== 'css') {
                 e.target.classList.add('dark-icon')
                 theme.href = "theme.css";

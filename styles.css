@@ -6,7 +6,6 @@ body {
     margin:0; 
     height: 100%; 
     overflow: hidden;
-    scrollbar-width: none;
     letter-spacing: 1.5px;
 }
 ::-webkit-scrollbar {
@@ -25,9 +24,6 @@ body {
 #editor {
     border: none; 
 }
-.ql-container .ql-editor {
-    height: none; 
-} 
 .ql-toolbar.ql-snow {
     border: none;
     padding-bottom: 30px;
