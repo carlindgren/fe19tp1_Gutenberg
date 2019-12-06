@@ -1,18 +1,15 @@
 # Quire - notebook in the browser 
 
-***
 
 **Quire** är multifunktionell anteckningsbok som fungerar direkt i webbläsaren. **Quire** har inget backend eller någon annan liknande server,- allt sparas lokalt i datorn/i webbläsaren. **Quire** är framtagen med hjälp av javascript-biblioteket **Quill**.
 
 ## Funktionalitet
-***
  - Lägg till och släng anteckning
  - Redigera anteckning 
  - Autosparar varje skrivet tecken till local storage
  - Sortera anteckning efter favoritmarkering
 
 ## Verktyg
-***
  - [quill] - "Your powerful rich text editor."
  - [Trello] - Vår scrumboard
 
