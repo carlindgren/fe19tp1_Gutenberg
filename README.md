@@ -14,13 +14,11 @@
  - [Trello] - Vår scrumboard
 
 ## Framtida utveckling
-***
  - Styling för anteckingslistan i mobil vy
  - Permanent borttagning av anteckningar
  - utveckla ett backend för att spara ned anteckningar
 
 ## Författare
-***
  **Helin Akkus**
  **Josefin Brorson**
  **Dilana Yavuz**
